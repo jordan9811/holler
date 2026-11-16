@@ -6,10 +6,10 @@
 //   holler-logo-dark.png  the wordmark on transparent, light letters — the
 //   holler-logo-light.png Privy sign-in modal's logo, one per modal theme
 //                       (appearance.logo in components/providers/privy-bridge.tsx)
-//   apple-icon.png      180x180 home-screen icon: the o alone (cream ring,
-//                       test card inside) on studio black
+//   apple-icon.png      180x180 home-screen icon: the o alone (the test card,
+//                       hairline edge) on studio black
 // web/public/icon.svg (the tab icon) is hand-drawn to the same proportions:
-// the card is 62% of the o.
+// a test card edged by a thin warm-black ring.
 // The test card is drawn with the SAME .hm-tc CSS the site uses (read out of
 // web/app/globals.css), so the rasters cannot drift from the component.
 // Re-run whenever the brand look changes, then bump ?v= on /og.png in

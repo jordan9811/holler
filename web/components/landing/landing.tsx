@@ -9,6 +9,7 @@ import { docsUrl } from '@/lib/docs-url.mjs'
 import { PoolThumb } from './pool-thumb'
 import { LandingHero } from './landing-hero'
 import { WaysIn } from './ways-in'
+import { RundownLive } from './rundown-live'
 import './landing.css'
 
 // What keeps it fair, one line of checks under the three ways. Each is true of the code
@@ -39,6 +40,18 @@ const CAMPAIGN_IDEAS = [
 ] as const
 
 const PLATFORM_NAME: Record<string, string> = { twitch: 'Twitch', kick: 'Kick', x: 'X', youtube: 'YouTube', pumpfun: 'pump.fun' }
+
+/** One rundown marker: the Retro rail label and the Classic tally, both
+ *  rendered; the look shows one (landing.css). Decoration: hidden from AT. */
+function Seg({ n, name, tc }: { n: string; name: string; tc: string }) {
+  return (
+    <span className="mcl-seg" aria-hidden="true">
+      <span className="mcl-seg-rail"><small><i />SEG {n}</small><b>{name}</b><em>{tc}</em></span>
+      <span className="mcl-seg-tally"><b>{n}</b><small><i>On air · </i>{name}</small></span>
+      <span className="mcl-crop" data-side="l" /><span className="mcl-crop" data-side="r" />
+    </span>
+  )
+}
 
 function poolHref(pool: BountyPool): string {
   return pool.platform && pool.handle
@@ -76,7 +89,14 @@ export function Landing({
         {/* Polish C (owner, 2026-11-16): one 1280 column. The three ways, one
             line of what keeps it fair, then each pitch as its own band: copy
             left, board right, stacked below 1100. */}
+        {/* The margins (owner, 2026-11-16): a TV rundown down the left gutter,
+            safe-area rules at the column edges. V2 (Retro) shows the rail as
+            SEG labels with timecodes; V1 (Classic) as big tally numerals with
+            the live one lit, plus crop marks. Wide screens only (landing.css). */}
+        <div className="mcl-run">
+        <RundownLive />
         <div className="mcl-duo">
+          <Seg n="01" name="The ways" tc="00:00:00:00" />
           <WaysIn />
           <ul className="mcl-trust" aria-label="How Holler keeps it fair">
             {TRUST.map(({ title, rest }) => (
@@ -88,6 +108,7 @@ export function Landing({
         {/* .dark: the boards stay at night in light mode too (Stone) */}
         <section className="mcl-bounty mcl-boards dark">
           <div className="mcl-half" data-k="bounty">
+            <Seg n="02" name="Bounties" tc="00:01:12:08" />
             <div className="mcl-bounty-poster">
               <small className="mcl-band-k">Bounties</small>
               <h2>Your favorite streamer doesn&apos;t even know you.</h2>
@@ -118,6 +139,7 @@ export function Landing({
               There is no public list of campaigns, so the board is starting
               points: each opens the new-campaign form. */}
           <div className="mcl-half" data-k="campaign">
+            <Seg n="03" name="Campaigns" tc="00:02:03:17" />
             <div className="mcl-bounty-poster">
               <small className="mcl-band-k">Campaigns</small>
               <h2>New to streaming? Grow your audience with Holler.</h2>
@@ -136,6 +158,7 @@ export function Landing({
             </div>
           </div>
         </section>
+        </div>
 
         <section className="mcl-create-strip">
           <div><h2>Create a room.</h2><p>Set your rate, connect OBS, and decide how viewers can join.</p></div>

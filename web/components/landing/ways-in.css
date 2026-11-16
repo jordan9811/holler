@@ -48,7 +48,7 @@
 }
 .mcl-ways-shot[data-shot='holler'] { background-image: url('/landing/ways-holler.webp'); }
 .mcl-ways-shot[data-shot='callin'] { background-image: url('/landing/ways-callin.webp'); }
-.mcl-ways-shot[data-shot='bounty'] { background-image: url('/landing/ways-bounty.webp'); }
+.mcl-ways-shot[data-shot='bounty'] { background-image: url('/landing/ways-bounty.webp?v=2'); }
 .mcl-ways-stage[data-way='holler'] [data-shot='holler'],
 .mcl-ways-stage[data-way='callin'] [data-shot='callin'],
 .mcl-ways-stage[data-way='bounty'] [data-shot='bounty'] { opacity: 1; }
@@ -169,11 +169,12 @@
   font: 700 10px/1 var(--font-code), ui-monospace, monospace;
 }
 
-/* Bounty: a lower third, the fan's pledge on the show he's watching. */
+/* Bounty: a compact card in the lower right, the fan's pledge on the board.
+   Kept off the left half, where the board's names and amounts are. */
 .mcl-ways-ov-bounty {
-  left: 4%;
-  right: 4%;
-  bottom: 7%;
+  right: 3%;
+  bottom: 5%;
+  max-width: 46%;
   display: flex;
   align-items: stretch;
 }

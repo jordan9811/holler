@@ -2743,3 +2743,28 @@ previous commit.
 - **A campaign row is keyed by its feature tab AND the feature named in its
   colour** (owner: the tab alone is not clear enough). Undo: landing.tsx and
   the "Polish C" block at the end of landing.css.
+
+## 2026-11-16 — The margins get a job; the Pledge picture; the V2 o reverted
+
+- **Rundown rail + safe area** (landing canvas, round 4). V2 (Retro, the
+  default, the brand being shown to people) gets the conservative take: a
+  hairline down the left gutter carrying SEG 01/02/03 with a timecode, the
+  segment being read marked by a red dot, and faint rules at the 1280 column
+  edges. V1 (Classic, the loud/experimental look) gets the tally take: big
+  outlined numerals, the live one lit red "On air", plus crop marks at each
+  section's top corners. Only at 1536px and wider (narrower gutters cannot
+  hold it). `rundown-live.tsx` sets the live marker. The create strip and the
+  footer now sit in the same 1280 column. Undo: the "Rundown rail" block in
+  `landing.css`, `<Seg>` and `.mcl-run` in `landing.tsx`.
+- **The Pledge picture is a chalk bounty ledger** (`ways-bounty.webp?v=2`,
+  sources and rejected rolls in `design-assets/pledge-picture/`): six real
+  handles (@xQc, @IShowSpeed, @KaiCenat, @Jynxzi, @AdinRoss, @Ninja) on gold
+  name plates, no faces. Generated from prose only, upscaled, re-encoded at
+  1920 wide. The overlay is now a compact card in the lower right ("$25 · You
+  pledged @xQc · #1 on the board"). **Owner's call, flagged for legal review
+  before launch**: real creators' names on a hero image can read as an
+  endorsement. Undo: `design-assets/pledge-picture/ways-bounty-OLD-couch.webp`.
+- **The V2 o is the full test card again**, now edged by a 0.022em hairline in
+  the letters' colour (the tab icon's thin ring, carried to the wordmark). The
+  thick "ink ring" o (ac7925b) was reverted the same day; the tab icon is its
+  pre-ac7925b version again. Icons `?v=6`, the card `?v=4`.

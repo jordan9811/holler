@@ -1177,3 +1177,100 @@ body:has(.mc-landing) {
   .mcl-half .mcl-idea-row { grid-template-columns: 3px minmax(0, 1fr) auto; }
   .mcl-half .mcl-idea-row > p strong { white-space: normal; }
 }
+
+/* ── Rundown rail + safe area (owner, 2026-11-16) ──────────────────────────
+   The margins get a job, the way a show's running order does. V2 (Retro, the
+   default, "Pick A"): a hairline down the left gutter carrying SEG 01/02/03
+   with a timecode, the live one marked by a red dot, and faint safe-area
+   rules at the 1280 column edges. V1 (Classic, "Pick C"): the same hairline
+   with big outlined tally numerals, the live one lit red "On air", plus crop
+   marks at each section's top corners. Only where the gutter fits it (1536+);
+   the live marker is set by rundown-live.tsx. */
+.mcl-run { position: relative; }
+.mcl-duo, .mcl-half { position: relative; }
+.mcl-seg { display: none; }
+@media (min-width: 901px) {
+  .mcl-create-strip, .mcl-footer { padding-inline: max(64px, calc((100% - 1280px) / 2)); }
+}
+@media (min-width: 1536px) {
+  .mcl-run::before,
+  .mcl-run::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+  }
+  /* the rail */
+  .mcl-run::before { left: calc(50% - 640px - 36px); width: 1px; background: rgba(150, 138, 120, 0.32); }
+  /* the safe area: the column's two edges */
+  .mcl-run::after {
+    left: calc(50% - 640px);
+    width: 1280px;
+    border-inline: 1px solid rgba(150, 138, 120, 0.14);
+  }
+  .mcl-seg {
+    position: absolute;
+    z-index: 2;
+    top: 76px;
+    right: calc(50% + 640px + 52px);
+    display: block;
+    font-family: var(--font-code), ui-monospace, monospace;
+    text-align: right;
+    pointer-events: none;
+  }
+  .mcl-seg::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    right: -22px;
+    width: 10px;
+    height: 1px;
+    background: rgba(150, 138, 120, 0.5);
+  }
+  .mcl-seg[data-live]::after { background: var(--hl-fg); }
+
+  /* V2 · the rail label */
+  .mcl-seg-rail { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .mcl-seg-rail small { display: inline-flex; align-items: center; gap: 6px; color: var(--hl-dim); font-size: 10px; letter-spacing: 0.16em; }
+  .mcl-seg-rail small i { display: none; width: 6px; height: 6px; border-radius: 50%; background: #ff3b30; }
+  .mcl-seg-rail b { color: var(--hl-muted); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .mcl-seg-rail em { color: var(--hl-dim); font-size: 10px; font-style: normal; letter-spacing: 0.06em; }
+  .mcl-seg[data-live] .mcl-seg-rail small { color: var(--hl-fg); }
+  .mcl-seg[data-live] .mcl-seg-rail small i { display: inline-block; }
+  .mcl-seg[data-live] .mcl-seg-rail b { color: var(--hl-fg); }
+
+  /* V1 · the tally */
+  .mcl-seg-tally { display: none; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .mcl-seg-tally b {
+    color: transparent;
+    font-family: var(--font-display), var(--font-ui), sans-serif;
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--hl-fg) 30%, transparent);
+  }
+  .mcl-seg-tally small { color: var(--hl-dim); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
+  .mcl-seg-tally small i { display: none; font-style: normal; }
+  .mcl-seg[data-live] .mcl-seg-tally b { color: #ff3b30; -webkit-text-stroke: 0; text-shadow: 0 0 24px rgba(255, 59, 48, 0.45); }
+  .mcl-seg[data-live] .mcl-seg-tally small { color: var(--hl-fg); }
+  .mcl-seg[data-live] .mcl-seg-tally small i { display: inline; }
+
+  /* V1 · crop marks at the column's top corners */
+  .mcl-crop { display: none; }
+  html[data-style='classic'] .mcl-seg-rail { display: none; }
+  html[data-style='classic'] .mcl-seg-tally { display: flex; }
+  html[data-style='classic'] .mcl-crop {
+    position: absolute;
+    top: -52px;
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-top: 1px solid color-mix(in srgb, var(--hl-fg) 45%, transparent);
+  }
+  /* the marker's right edge is 52px left of the column: 40px past it is 12px outside the column's left edge */
+  html[data-style='classic'] .mcl-crop[data-side='l'] { left: calc(100% + 40px); border-left: 1px solid color-mix(in srgb, var(--hl-fg) 45%, transparent); }
+  html[data-style='classic'] .mcl-crop[data-side='r'] { left: calc(100% + 52px + 1280px + 12px - 18px); border-right: 1px solid color-mix(in srgb, var(--hl-fg) 45%, transparent); }
+}

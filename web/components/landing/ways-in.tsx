@@ -33,10 +33,10 @@ const WAYS: Record<Way, { verb: string; line: string; readout: string; cta: stri
   bounty: {
     verb: 'Pledge',
     line: 'Back a streamer before they have a room.',
-    readout: '$200 · @latedesk',
+    readout: '$2,500 · @xQc',
     cta: 'Browse bounties',
     href: '/bounty',
-    label: 'A fan on the couch backing the streamer on screen',
+    label: 'A bounty board in chalk, @xQc at number one with $2,500 open',
   },
 }
 const ORDER: Way[] = ['holler', 'callin', 'bounty']
@@ -66,7 +66,7 @@ export function WaysIn() {
           {ORDER.map((w) => <span key={w} className="mcl-ways-shot" data-shot={w} aria-hidden="true" />)}
           <span className="mcl-ways-live" aria-hidden="true">
             <i />
-            {way === 'holler' ? 'LIVE · pixelmaeve' : way === 'callin' ? 'LIVE · nordtalk' : 'WATCHING · latedesk'}
+            {way === 'holler' ? 'LIVE · pixelmaeve' : way === 'callin' ? 'LIVE · nordtalk' : 'BOUNTY BOARD · 6 open'}
           </span>
           <div className="mcl-ways-ov mcl-ways-ov-holler" aria-hidden="true">
             <span className="t">0:07</span>
@@ -78,8 +78,8 @@ export function WaysIn() {
             <span className="meter">00:00:43 · $0.043</span>
           </div>
           <div className="mcl-ways-ov mcl-ways-ov-bounty" aria-hidden="true">
-            <span className="amt">$200</span>
-            <span className="who"><strong>You pledged @latedesk</strong><small>Paid out when they go live and play it</small></span>
+            <span className="amt">$25</span>
+            <span className="who"><strong>You pledged @xQc</strong><small>#1 on the board · paid when they go live</small></span>
           </div>
         </div>
         <div className="mcl-ways-modes" role="group" aria-label="Ways in">

@@ -940,10 +940,10 @@ html:not([data-style='classic']) .hm .hm-retro {
 html:not([data-style='classic']) .hm.hm--icon .hm-retro {
   font-size: 1.3em;
 }
-/* the o: a ring in the letters' colour with a round SMPTE test card inside
-   (seven bars, the castellation strip, the bottom row), in the letters'
-   x-height. The card is 62% of the o (owner's pick 2026-11-16, "ink ring,
-   bars inside"); the bars are laid out in the padding box (background-origin), inside the ring. */
+/* the o: a round SMPTE test card (seven bars, the castellation strip, the
+   bottom row) in the letters' x-height, edged by a hairline in the letters'
+   colour so it reads as one defined shape, like the tab icon's thin ring
+   (owner, 2026-11-16: the thick "ink ring" o was reverted the same day). */
 /* font-size inherit: page headers set `… span { font-size: 11px }` at (0,1,1)
    inside the lockup, and the o is a span (see the .hm comment above) */
 .hm .hm-tc {
@@ -956,7 +956,7 @@ html:not([data-style='classic']) .hm.hm--icon .hm-retro {
   margin: 0 0.03em 0 0.035em;
   padding: 0;
   box-sizing: border-box;
-  border: 0.1em solid currentColor;
+  border: 0.022em solid currentColor;
   border-radius: 50%;
   font-size: inherit;
   background:

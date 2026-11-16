@@ -5164,3 +5164,11 @@ commit before); `_gate-dashboard-update`, `_gate-rooms-store`,
   prize is decided (exempt them from the budget pass in `archiveAiredClip`).
   **Owner, 2026-11-13: not needed yet.** Bring it back up if prize campaigns
   see real use (busy rooms, many entries), or when he asks for open issues.
+
+- **LG1 — real creators' names on the landing page (2026-11-16).** The Pledge
+  picture shows six real streamers' handles (@xQc, @IShowSpeed, @KaiCenat,
+  @Jynxzi, @AdinRoss, @Ninja) and the board's example bounties name real
+  people too. On a hero image that can read as an endorsement (right of
+  publicity / false endorsement). Owner's call to ship it; get a lawyer's
+  read before the public launch. Swapping the picture back is one file
+  (`design-assets/pledge-picture/ways-bounty-OLD-couch.webp`).

@@ -62,7 +62,7 @@ export const metadata: Metadata = {
       {
         // Purpose-built 1200x630 card (scripts/generate-og.mjs). Versioned:
         // link previews cache by URL, so bump ?v= whenever og.png changes.
-        url: '/og.png?v=3',
+        url: '/og.png?v=4',
         width: 1200,
         height: 630,
         alt: 'holler, the o a round TV test card, over: Skip the chat. Be the stream.',
@@ -73,13 +73,13 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: SITE_TITLE,
     description: SITE_DESC,
-    images: ['/og.png?v=3'],
+    images: ['/og.png?v=4'],
   },
   // Versioned: browsers cache a tab icon by its URL and ignore no-cache, so a
   // new icon needs a new URL. Bump ?v= whenever icon.svg or apple-icon.png change.
   icons: {
-    icon: '/icon.svg?v=5',
-    apple: '/apple-icon.png?v=5',
+    icon: '/icon.svg?v=6',
+    apple: '/apple-icon.png?v=6',
   },
 }
 
