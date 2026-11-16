@@ -47,7 +47,7 @@ function Seg({ n, name, tc }: { n: string; name: string; tc: string }) {
   return (
     <span className="mcl-seg" aria-hidden="true">
       <span className="mcl-seg-rail"><small><i />SEG {n}</small><b>{name}</b><em>{tc}</em></span>
-      <span className="mcl-seg-tally"><b>{n}</b><small><i>On air · </i>{name}</small></span>
+      <span className="mcl-seg-tally"><b>{n}</b><small><i>On air</i><span>{name}</span></small></span>
       <span className="mcl-crop" data-side="l" /><span className="mcl-crop" data-side="r" />
     </span>
   )
@@ -85,7 +85,9 @@ export function Landing({
 
       <LandingHero />
 
-      <main>
+      <main className="mcl-main">
+        {/* V2: the film's two lights down the page, plus fine grain (landing.css, "Atmosphere") */}
+        <span className="mcl-atmos" aria-hidden="true" />
         {/* Polish C (owner, 2026-11-16): one 1280 column. The three ways, one
             line of what keeps it fair, then each pitch as its own band: copy
             left, board right, stacked below 1100. */}

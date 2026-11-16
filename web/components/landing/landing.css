@@ -1258,7 +1258,9 @@ body:has(.mc-landing) {
   .mcl-seg-tally small i { display: none; font-style: normal; }
   .mcl-seg[data-live] .mcl-seg-tally b { color: #ff3b30; -webkit-text-stroke: 0; text-shadow: 0 0 24px rgba(255, 59, 48, 0.45); }
   .mcl-seg[data-live] .mcl-seg-tally small { color: var(--hl-fg); }
+  /* the live one says only ON AIR: the name beside it ran off a 160px gutter */
   .mcl-seg[data-live] .mcl-seg-tally small i { display: inline; }
+  .mcl-seg[data-live] .mcl-seg-tally small span { display: none; }
 
   /* V1 · crop marks at the column's top corners */
   .mcl-crop { display: none; }
@@ -1280,4 +1282,66 @@ body:has(.mc-landing) {
 /* the night mapping sets a flat ground; the create strip keeps its blue wash on top of it */
 .mc-landing .mcl-create-strip.mcl-night {
   background: radial-gradient(circle at 12% 30%, color-mix(in srgb, var(--hl-strap) var(--mcl-wash), transparent), transparent 40%), var(--mcl-bg);
+}
+
+/* ── Atmosphere (owner, 2026-11-16, landing canvas round 5) ────────────────
+   V2 (Retro, the default) takes "Pick": the launch film's two lights carried
+   down the page (cool blue from the left, warm tungsten from the right), a
+   whisper of each band's colour at its edges, and fine film grain. V1
+   (Classic) takes "Lit seams" (the owner's second choice, kept on V1 to have
+   it live): a hairline of each band's colour where bands meet, bright at the
+   screen edges and fading to the middle, with a little haze under it.
+   Everything here only tints: screen-blended, never covering content, and
+   none of it moves. */
+.mcl-main { position: relative; }
+.mcl-atmos { display: none; }
+html:not([data-style='classic']) .mcl-atmos {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(640px 70% at -120px 30%, rgba(40, 140, 255, 0.13), transparent 70%),
+    radial-gradient(560px 60% at -80px 85%, rgba(0, 200, 220, 0.07), transparent 70%),
+    radial-gradient(640px 70% at calc(100% + 120px) 45%, rgba(255, 140, 40, 0.12), transparent 70%),
+    radial-gradient(520px 55% at calc(100% + 80px) 92%, rgba(255, 90, 30, 0.06), transparent 70%);
+}
+html:not([data-style='classic']) .mcl-atmos::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: overlay;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+/* the whisper of each band's colour, from both edges */
+html:not([data-style='classic']) .mcl-half::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(520px 90% at -60px 50%, color-mix(in srgb, var(--hk) 7%, transparent), transparent 70%),
+    radial-gradient(520px 90% at calc(100% + 60px) 50%, color-mix(in srgb, var(--hk) 7%, transparent), transparent 70%);
+}
+/* V1 · lit seams: where each band meets the one above */
+.mcl-create-strip { position: relative; }
+html[data-style='classic'] :is(.mcl-half, .mcl-create-strip)::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto;
+  height: 220px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, var(--seam) 0, transparent 22%, transparent 78%, var(--seam) 100%) 0 0 / 100% 1px no-repeat,
+    radial-gradient(420px 220px at 0% 0%, color-mix(in srgb, var(--seam) 14%, transparent), transparent 70%),
+    radial-gradient(420px 220px at 100% 0%, color-mix(in srgb, var(--seam) 14%, transparent), transparent 70%);
+}
+html[data-style='classic'] .mcl-half { --seam: color-mix(in srgb, var(--hk) 60%, transparent); }
+html[data-style='classic'] .mcl-create-strip { --seam: color-mix(in srgb, var(--hl-strap) 60%, transparent); }
+@media (prefers-reduced-transparency: reduce) {
+  .mcl-atmos, .mcl-half::before, .mcl-create-strip::before { display: none !important; }
 }

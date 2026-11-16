@@ -2768,3 +2768,20 @@ previous commit.
   the letters' colour (the tab icon's thin ring, carried to the wordmark). The
   thick "ink ring" o (ac7925b) was reverted the same day; the tab icon is its
   pre-ac7925b version again. Icons `?v=6`, the card `?v=4`.
+
+## 2026-11-16 — Atmosphere in the margins; the Three-ways headline cut
+
+- **V2 (Retro) takes "Pick"** from round 5 of the landing canvas: the launch
+  film's two lights carried down the page (cool blue from the left, warm
+  tungsten from the right), a whisper of each band's colour at its edges, and
+  fine film grain. **V1 (Classic) takes "Lit seams"**, the owner's second
+  choice, so the alternative is live and documented: a hairline of each band's
+  colour where bands meet, bright at the screen edges. Both only tint
+  (screen-blended), never move, and switch off for prefers-reduced-transparency.
+  Other round-5 options (feature fog alone, grain + vignette, one continuous
+  ground) stay on the canvas. Undo: the "Atmosphere" block in landing.css.
+- **"Three ways on the show" is gone from the screen** (kept for screen
+  readers). It read as template copy; the cards name the ways, the stage shows
+  them, and the rail says THE WAYS on wide screens. An "On air now" strip in
+  its place was mocked and rejected. Undo: the .mcl-ways-title rule in
+  ways-in.css.

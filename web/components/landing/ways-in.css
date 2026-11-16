@@ -303,15 +303,17 @@
 }
 
 
-/* One-line heading; on wide screens the ways sit left and the picture right
-   (the hero's film is on the left above, so the page alternates). */
+/* The heading is for screen readers only (owner, 2026-11-16: "Three ways on
+   the show" read as template copy). The cards name the three ways and the
+   stage shows them; on wide screens the rail says THE WAYS. On wide screens
+   the ways sit left and the picture right (the film is left above). */
 .mcl-ways-title {
-  margin: 0 0 22px;
-  font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 48px);
-  font-weight: 800;
-  letter-spacing: -.03em;
-  line-height: 1;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
   white-space: nowrap;
 }
 @media (min-width: 901px) {
