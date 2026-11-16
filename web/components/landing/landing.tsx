@@ -160,13 +160,15 @@ export function Landing({
         </section>
         </div>
 
-        <section className="mcl-create-strip">
+        {/* .dark: from the boards down the page stays at night in light mode too,
+            so it never goes light, dark, light again (owner, 2026-11-16) */}
+        <section className="mcl-create-strip mcl-night dark">
           <div><h2>Create a room.</h2><p>Set your rate, connect OBS, and decide how viewers can join.</p></div>
           <Link href="/dashboard">Create room <ArrowRight size={16} aria-hidden="true" /></Link>
         </section>
       </main>
 
-      <footer className="mcl-footer">
+      <footer className="mcl-footer mcl-night dark">
         <span><BrandText /></span>
         <nav aria-label="Footer">
           <Link href="/app">Rooms</Link>

@@ -11,9 +11,11 @@
    its own .dark scope in landing-hero.tsx). */
 
 /* The bounty band carries .dark, so in light it stays at night (the owner's
-   "Stone" pick): the mapping below runs again on it with the dark tokens. */
+   "Stone" pick): the mapping below runs again on it with the dark tokens.
+   The create strip and the footer (.mcl-night) stay at night with it. */
 .mc-landing,
-.mc-landing .mcl-bounty.dark {
+.mc-landing .mcl-bounty.dark,
+.mc-landing .mcl-night.dark {
   /* the landing's own names, mapped onto the shared tokens */
   --mcl-bg: var(--hl-bg);
   --mcl-panel: var(--hl-panel);
@@ -1273,4 +1275,9 @@ body:has(.mc-landing) {
   /* the marker's right edge is 52px left of the column: 40px past it is 12px outside the column's left edge */
   html[data-style='classic'] .mcl-crop[data-side='l'] { left: calc(100% + 40px); border-left: 1px solid color-mix(in srgb, var(--hl-fg) 45%, transparent); }
   html[data-style='classic'] .mcl-crop[data-side='r'] { left: calc(100% + 52px + 1280px + 12px - 18px); border-right: 1px solid color-mix(in srgb, var(--hl-fg) 45%, transparent); }
+}
+
+/* the night mapping sets a flat ground; the create strip keeps its blue wash on top of it */
+.mc-landing .mcl-create-strip.mcl-night {
+  background: radial-gradient(circle at 12% 30%, color-mix(in srgb, var(--hl-strap) var(--mcl-wash), transparent), transparent 40%), var(--mcl-bg);
 }
