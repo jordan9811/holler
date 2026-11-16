@@ -10,6 +10,9 @@
 // text colour, done and quiet. A tier colour is a rail and a dot, never the
 // FeatureTag pill, so a tier cannot be read as a feature.
 //
+// Shipped items carry the date they went live and, where there is one, the
+// commit that shipped it, linked on GitHub (the repo is public).
+//
 // No server state and no client state: <details> opens on its own, so this
 // renders on the server.
 
@@ -25,7 +28,11 @@ type Item = {
   when?: string
   // the first demo links to its tweet when JOURNEY_TWEET_URL is set
   tweet?: boolean
+  // the commit that shipped it, short sha, linked on GitHub
+  commit?: string
 }
+
+export const REPO_URL = 'https://github.com/jordan9811/holler'
 
 const TIERS: { id: Tier; name: string; note: string }[] = [
   { id: 'shipped', name: 'Shipped', note: 'Live on Holler today' },
@@ -34,76 +41,148 @@ const TIERS: { id: Tier; name: string; note: string }[] = [
   { id: 'later', name: 'Later', note: 'The big swings' },
 ]
 
-// Newest first: what shipped in November, then the road before it.
+// Newest first. Every shipped item carries the month (and day, from November)
+// it went live and, where there is one, the commit that shipped it, linked on
+// GitHub. Reconciled against the git history on 2026-11-16: "Public docs" and
+// "Overlay health" had shipped (September, July) while still listed under Next.
 const SHIPPED: Item[] = [
   {
-    title: 'Real-money bounties',
-    body: 'Back a streamer with real USDC and a Holler for them to air. Your pledge waits for them to claim it, and comes back to you if they don’t before it expires.',
-    tags: ['bounty'],
+    when: 'November 16',
+    title: 'A calmer home page',
+    body: 'The home page rebuilt around the three ways in, the bounty board and campaign ideas, in one clean column.',
+    commit: '5f0892b',
   },
   {
-    title: 'A liveness label on every room',
-    body: 'Green, yellow or red: how much proof stands behind the money. Green means our badge was seen on the broadcast, yellow that the overlay is up, red that only the channel is live. Hover it for why, and set the lowest tier you’ll back.',
-    tags: ['bounty'],
+    when: 'November 13',
+    title: 'Prize campaigns',
+    body: 'Put up one prize, or 1st, 2nd and 3rd places, for the best Holler or Call in on your stream. You pick the winners after the show; if you don’t within 48 hours, it’s split between every entry.',
+    tags: ['rewards'],
+    commit: '7ae3d6c',
   },
   {
+    when: 'November 10',
+    title: 'The launch film',
+    body: 'A short film on the home page that shows what Holler does, start to finish.',
+    commit: '35695e1',
+  },
+  {
+    when: 'November 10',
+    title: 'Demo money and a guided tour',
+    body: 'Try everything in the demo room on demo money, never real money, with a short tour that walks you through it.',
+    commit: 'aafedfb',
+  },
+  {
+    when: 'November 9',
+    title: 'Claimed pledges on the board',
+    body: 'The board shows the pledges streamers have claimed, each with a real picture from the stream.',
+    tags: ['bounty'],
+    commit: '3892ed5',
+  },
+  {
+    when: 'November 9',
+    title: 'Real platform logos',
+    body: 'Twitch, Kick, YouTube, X, Rumble and pump.fun badges wear their own logos and colours, so you know the platform at a glance.',
+    commit: '80d3292',
+  },
+  {
+    when: 'November 9',
+    title: 'Follow my stream, on Twitch and Kick',
+    body: 'Link your channel and your room opens when you go live, takes your stream title as its name, and closes when you stop. Kick joined Twitch.',
+    commit: '0b5eca2',
+  },
+  {
+    when: 'November 8',
     title: 'Hollers billed by the second',
     body: 'You pay for the seconds you record, up to the room’s longest clip, instead of a flat price for every take. Call in already worked this way.',
     tags: ['holler', 'callin'],
+    commit: '83665c8',
   },
   {
-    title: 'Follow my stream, on Twitch and Kick',
-    body: 'Link your channel and your room opens when you go live, offers your stream title as its name, and closes when you stop.',
-  },
-  {
-    title: 'Reward campaigns',
-    body: 'Offer a reward to viewers who fit your rules, like having 10k followers on X, for sending a Holler or calling in on your stream. They’re paid once it airs.',
-    tags: ['rewards'],
-  },
-  {
-    title: 'MegaChat is now Holler',
-    body: 'A new name at hollertv.com, the record-button mark, one colour per feature, a light mode, and two looks to switch between from the header: V1 and V2.',
-    tags: ['holler', 'callin', 'bounty', 'rewards'],
-  },
-  {
-    title: 'Claimed pledges and Recently aired',
-    body: 'The board shows the pledges streamers have claimed, and replays of broadcasts that just aired, each with a real picture from the stream.',
-  },
-  {
-    title: 'Demo money and a guided tour',
-    body: 'Try everything in the demo room on demo money, never real money, with a short tour that walks you through it.',
-  },
-  {
-    title: 'Real platform logos',
-    body: 'Twitch, Kick, YouTube, X, Rumble and pump.fun badges wear their own logos and colours, so you know the platform at a glance.',
-  },
-  {
+    when: 'November 7 to 10',
     title: 'Over 150 fixes, picked one by one',
     body: 'Four rounds of polish across the dashboard, the overlay, room pages and the board: prices shown per second, honest loading and error states, bigger touch targets, a simpler OBS setup and a lot less text.',
   },
   {
-    title: 'The launch film',
-    body: 'A short film on the home page that shows what Holler does, start to finish.',
+    when: 'November 4',
+    title: 'Real-money bounties',
+    body: 'Back a streamer with real USDC and a Holler for them to air. Your pledge waits for them to claim the bounty, and comes back to you if they don’t before it expires.',
+    tags: ['bounty'],
+    commit: '6ffdd4d',
+  },
+  {
+    when: 'November 4',
+    title: 'A liveness label on every room',
+    body: 'Green, yellow or red: how much proof stands behind the money. Green means our badge was seen on the broadcast, yellow that the overlay is up, red that only the channel is live. Set the lowest tier you’ll back.',
+    tags: ['bounty'],
+    commit: '1b98584',
+  },
+  {
+    when: 'November 4',
+    title: 'A broadcast-TV look',
+    body: 'V2 became the default: lowercase holler with a test-card o, warm blacks and flat colour. The neon V1 look is one switch away in the header.',
+    commit: '807373d',
   },
 ]
 
 const EARLIER: Item[] = [
   {
-    when: 'September 2026',
-    title: 'Producer mode',
-    body: 'Hold every Holler for approval. A moderator airs it, and nothing waits forever.',
-    tags: ['holler'],
+    when: 'October 23',
+    title: 'Reward campaigns',
+    body: 'Offer a reward to viewers who fit your rules, like having 10k followers on X, for sending a Holler or calling in on your stream. They’re paid once it airs.',
+    tags: ['rewards'],
+    commit: 'bd741f1',
   },
   {
-    when: 'September 2026',
+    when: 'October 20',
+    title: 'MegaChat is now Holler',
+    body: 'A new name at hollertv.com, one colour per feature, and a light mode.',
+    tags: ['holler', 'callin', 'bounty', 'rewards'],
+    commit: '2ed6917',
+  },
+  {
+    when: 'September 26',
     title: 'Guests that sound right',
     body: 'Echo is found and cancelled on both sides, with a guard against feedback howl and no audio mode to pick.',
     tags: ['callin'],
+    commit: '4fa7b87',
   },
   {
-    when: 'September 2026',
+    when: 'September 25',
+    title: 'Recently aired',
+    body: 'Replays of broadcasts that just aired, on the board, each with a real picture from the stream.',
+    commit: '0bdcc31',
+  },
+  {
+    when: 'September 19',
+    title: 'Producer mode',
+    body: 'Hold every Holler for approval. A moderator airs it, and nothing waits forever.',
+    tags: ['holler'],
+    commit: '58deca7',
+  },
+  {
+    when: 'September 16',
+    title: 'The handbook',
+    body: 'Docs for streamers and viewers, linked from every page that needs them: setup, prices, bounties, rewards.',
+    commit: 'eed552e',
+  },
+  {
+    when: 'September 16',
     title: 'Overlay placement',
     body: 'Pick the corner, the direction, the tile size and the gap for your overlay, with a live preview.',
+    commit: '94b0a23',
+  },
+  {
+    when: 'July 27',
+    title: 'Bounties, first version',
+    body: 'Back a streamer who isn’t on Holler yet with a Holler for them to air. They claim the bounty by going live and playing it.',
+    tags: ['bounty'],
+    commit: '901dfc9',
+  },
+  {
+    when: 'July 25',
+    title: 'Overlay health at a glance',
+    body: 'Your dashboard shows whether the overlay is up and working on your stream right now.',
+    commit: '0a2113e',
   },
   {
     when: 'July 2026',
@@ -163,17 +242,13 @@ const NOW: Item[] = [
 
 const NEXT: Item[] = [
   {
-    title: 'Your pledges: revisit, re-up, top up',
-    body: 'One page for every bounty you backed: where it stands, who claimed it, and your clips, playable. If one gets claimed before your clip airs, re-up the same clip for that streamer. Still want to see it? Top it up.',
+    title: 'My pledges: re-up and top up',
+    body: 'My pledges already lists every pledge you’ve made and where it stands. Next: your clips playable there, re-up a clip for another streamer if the one you backed is claimed first, and top up a pledge you still want to see.',
     tags: ['bounty'],
   },
   {
     title: 'Drag your overlay tiles into place',
     body: 'Place the tiles by dragging them on the preview, instead of picking a corner and a direction.',
-  },
-  {
-    title: 'Overlay health at a glance',
-    body: 'Your dashboard shows whether the overlay is up and working on your stream right now.',
   },
   {
     title: 'Claim your channel on more platforms',
@@ -188,10 +263,6 @@ const NEXT: Item[] = [
     title: 'Live AI moderation',
     body: 'Hollers already get an AI check before they play. Next, the same check watches live seats, so a room can run hands-off.',
     tags: ['callin'],
-  },
-  {
-    title: 'Public docs',
-    body: 'A handbook for streamers and viewers: setup, prices, bounties, rewards.',
   },
 ]
 
@@ -272,6 +343,11 @@ function RoadItem({ item, tier, tweetUrl }: { item: Item; tier: Tier; tweetUrl: 
               </>
             ) : null}
           </p>
+          {item.commit ? (
+            <a className="rm-commit" href={`${REPO_URL}/commit/${item.commit}`} target="_blank" rel="noopener noreferrer">
+              <span className="sr-only">Shipped in commit </span>{item.commit}
+            </a>
+          ) : null}
           {item.tags ? (
             <span className="rm-tags">
               {item.tags.map((k) => <FeatureTag key={k} kind={k} />)}

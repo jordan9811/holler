@@ -2810,3 +2810,19 @@ previous commit.
   The create strip now wears the bands' style: panel ground, a 5% blue wash
   from the column's corner, a flat button. Every earlier take is on the
   landing canvas, rounds 4 and 5.
+
+## 2026-11-16 — The roadmap matches the site and the git history
+
+- **Look**: no GlitchBackground (the confetti and grid); the site header's
+  column (max-w-6xl) so the logo and content share an edge; display-face
+  headings and a flat button like the home page.
+- **Content, reconciled against git**: shipped items carry the date they went
+  live and the commit that shipped them, linked on the public GitHub repo, and a
+  "Built in the open" link under the heading. Moved to Shipped: Public docs
+  (the handbook, eed552e, September) and Overlay health (0a2113e, July), both
+  still listed under Next. Added: Prize campaigns, the broadcast-TV look (V2),
+  the calmer home page, Bounties first version (July), Recently aired
+  (September). "Your pledges" in Next now says what My pledges already does.
+  Not shipped and left in place: overlay tile labels, drag-to-place, re-up/top-up,
+  claims on more platforms, Follow my stream beyond Twitch and Kick, live AI
+  moderation.
