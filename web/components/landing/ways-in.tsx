@@ -79,7 +79,7 @@ export function WaysIn() {
           </div>
           <div className="mcl-ways-ov mcl-ways-ov-bounty" aria-hidden="true">
             <span className="amt">$25</span>
-            <span className="who"><strong>You pledged @xQc</strong><small>#1 on the board · paid when they go live</small></span>
+            <span className="who"><strong>You pledged @xQc</strong></span>
           </div>
         </div>
         <div className="mcl-ways-modes" role="group" aria-label="Ways in">
