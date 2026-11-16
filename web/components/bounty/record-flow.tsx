@@ -74,7 +74,7 @@ export function cleanAmount(raw: string): string {
 }
 
 /**
- * The ONE number the button prints, the server books and My bounties shows:
+ * The ONE number the button prints, the server books and My pledges shows:
  * no leading zeros, no trailing '.' or zeros after the point. Null when it is
  * not a positive amount. The server refuses anything else (bounty-escrow.js
  * isCanonicalAmount), before it writes a pledge.
@@ -523,7 +523,7 @@ export function RecordFlow({
           </button>
           <button type="button" onClick={() => { setError(null); setStage('terms') }}
             className={`inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-sm font-bold transition-transform duration-150 ease-[cubic-bezier(.23,1,.32,1)] active:scale-[.97] ${BOUNTY_SOLID}`}>
-            Looks good — set the bounty
+            Looks good — set your pledge
           </button>
           <FeatureTag kind="holler">{durationS}s take</FeatureTag>
         </div>
@@ -533,7 +533,7 @@ export function RecordFlow({
         <div className="mt-4 space-y-4">
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label htmlFor="bounty-amount" className="text-sm font-medium text-foreground">Bounty amount</label>
+              <label htmlFor="bounty-amount" className="text-sm font-medium text-foreground">Pledge amount</label>
               {/* A money field: fixed $ and unit, digits and one '.' only.
                   The terms lock once the pledge exists: a retry uploads under
                   the pledge already made, so the form must show its terms. */}
@@ -560,7 +560,7 @@ export function RecordFlow({
             <label className="block">
               <span className="text-sm font-medium text-foreground">Display name <span className="font-normal text-muted-foreground">(optional)</span></span>
               <input value={contributor} onChange={(e) => setContributor(e.target.value)} disabled={pledged} maxLength={64}
-                placeholder="Shown beside your bounty"
+                placeholder="Shown beside your pledge"
                 className="mt-1 h-11 w-full rounded-xl border border-border bg-input/30 px-3.5 text-sm text-foreground placeholder:text-muted-foreground" />
               {/* The money keys to the signed-in ACCOUNT, not to this string —
                   saying otherwise here would misstate where a refund goes, on
@@ -590,7 +590,7 @@ export function RecordFlow({
           {unclaimedOthers.length ? (
             <div>
               <span className="text-sm font-medium text-foreground">
-                Also offer this to… <span className="text-xs font-normal text-muted-foreground">(optional, max 2 more — first to claim takes the whole bounty)</span>
+                Also offer this to… <span className="text-xs font-normal text-muted-foreground">(optional, max 2 more — first to claim takes your whole pledge)</span>
               </span>
               <div className="mt-1.5 flex flex-wrap gap-2">
                 {unclaimedOthers.map((p) => {
@@ -610,7 +610,7 @@ export function RecordFlow({
               </div>
               {extraTargets.length ? (
                 <p className="mt-1 text-xs text-f-bounty-ink">
-                  Heads up: one bounty, {extraTargets.length + 1} doors. Whoever claims first gets it — the others will see it leave their pool.
+                  Heads up: one pledge, {extraTargets.length + 1} doors. Whoever claims first gets it — the others will see it leave their pool.
                 </p>
               ) : null}
             </div>
@@ -695,7 +695,7 @@ export function RecordFlow({
           </p>
           <button type="button" onClick={() => onDone(contributor.trim())}
             className="mt-2 inline-flex min-h-11 items-center text-sm font-bold text-foreground underline decoration-hl-strap-hi decoration-2 underline-offset-4">
-            See it in My bounties →
+            See it in My pledges →
           </button>
         </div>
       ) : null}

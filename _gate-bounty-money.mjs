@@ -520,7 +520,7 @@ try {
     }
     const mineAfter = await call('GET', '/api/bounty/my');
     const badPool = await call('GET', '/api/bounty/pool-view?platform=twitch&handle=bmbadamt', undefined, null);
-    ok('B. "1,000", "$5", "5 USDC", "1e3" → 400 bad_amount BEFORE any write: My bounties unchanged, no pool reserved, nothing sent',
+    ok('B. "1,000", "$5", "5 USDC", "1e3" → 400 bad_amount BEFORE any write: My pledges unchanged, no pool reserved, nothing sent',
       Object.values(badAmounts).every((v) => v === '400 bad_amount') && (mineAfter.body.contributions || []).length === (mineBefore.body.contributions || []).length && badPool.body.reserved == null && st.sends === 0,
       JSON.stringify(badAmounts));
     const pl = await call('POST', '/api/bounty/pledge', { targets: [{ platform: 'twitch', handle: 'bmtarget' }], contributor: 'Gate', amount: '5', expiresInMs: 400 });

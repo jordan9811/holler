@@ -3,7 +3,7 @@ import { MyPledges } from '@/components/bounty/my-pledges'
 
 export const dynamic = 'force-dynamic'
 
-export const metadata = { title: 'My bounties — Holler' }
+export const metadata = { title: 'My pledges — Holler' }
 
 export default async function MinePage({
   searchParams,
@@ -12,7 +12,7 @@ export default async function MinePage({
 }) {
   const { me } = await searchParams
   return (
-    <BountyShell title="My bounties">
+    <BountyShell title="My pledges">
         <MyPledges initialMe={me} />
     </BountyShell>
   )

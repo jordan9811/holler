@@ -116,7 +116,7 @@ body .mc-how :is(.mch-tree-result h2, .mch-section-heading h2) { letter-spacing:
   .mc-product-header { padding: 10px 16px 8px; }
   .mc-product-main { padding: 24px 16px; }
 }
-/* On a narrow phone the title tag ('My bounties') pushed Sign in onto a row of its own, so it goes, as the other
+/* On a narrow phone the title tag ('My pledges') pushed Sign in onto a row of its own, so it goes, as the other
    product headers' tags already do at 720px. */
 @media (max-width: 400px) {
   .mc-product-header > span { display: none; }

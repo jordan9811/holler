@@ -33,7 +33,7 @@ Every term this project invented or reuses oddly, one line each, with the file w
 | **Airing** | One record per broadcast a room went through, with moments (seat, seat_leave, megachat). | `airings-store.js` |
 | **Moment** | The second something worth opening at happened, stored as absolute time plus offset. | `addMoment`, `airings-store.js` |
 | **Poster** | The picture a finished broadcast shows on Recently aired: one JPEG per AIRING, from while a guest was on or a MegaChat played (our capture, a recording frame, a kept live preview, or the recording thumbnail, best first), or a typographic card when there is none. | `airing-posters.js` |
-| **Bounty / pool** | Money fans pool against a reserved handle, folded from the ledger on every read. | `bounty-store.js`, `bounty-escrow.js` |
+| **Bounty / pool** | Money fans pool against a reserved handle, folded from the ledger on every read. In the product's words a bounty is always this pot ("Top bounties", "claim this bounty"); one fan's money toward it is a pledge ("Pledge amount", "My pledges"). | `bounty-store.js`, `bounty-escrow.js` |
 | **Pledge** | One fan's money across up to three streamers, claimable by whichever goes live first. | `pledge`, `bounty-escrow.js` |
 | **Reserved handle** | A streamer's name a pool sits against before they have claimed it. | `reserveHandle`, `bounty-store.js` |
 | **Air session** | The span during which a claimant's overlay issues verification codes; capture runs only inside it. | `createAirSession`; `bounty-capture.js` |

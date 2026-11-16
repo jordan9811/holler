@@ -163,7 +163,7 @@ const NOW: Item[] = [
 
 const NEXT: Item[] = [
   {
-    title: 'Your bounties: revisit, re-up, top up',
+    title: 'Your pledges: revisit, re-up, top up',
     body: 'One page for every bounty you backed: where it stands, who claimed it, and your clips, playable. If one gets claimed before your clip airs, re-up the same clip for that streamer. Still want to see it? Top it up.',
     tags: ['bounty'],
   },

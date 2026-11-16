@@ -189,7 +189,7 @@ try {
     ledgerLines() === ledgerBefore && clipFiles().length === 0,
     'preview is free; only submit pays');
 
-  await clickText('Looks good — set the bounty');
+  await clickText('Looks good — set your pledge');
   ok('B. the rejection policy is on screen BEFORE the pay button is pressed',
     (await waitText('Before you pay')) && (await waitText('full refund')),
     'disclosed pre-payment, not post-dispute');

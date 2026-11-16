@@ -158,7 +158,7 @@ export function AccountChip({ accent = 'var(--hl-strap-hi)' }: { accent?: string
             New room
           </a>
           <a href="/bounty/mine" role="menuitem" className="block px-2.5 py-2 text-[13px] text-hl-fg hover:bg-hl-panel-2">
-            My bounties
+            My pledges
           </a>
           <a href="/dashboard/campaigns" role="menuitem" className="block px-2.5 py-2 text-[13px] text-hl-fg hover:bg-hl-panel-2">
             Campaigns

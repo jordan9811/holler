@@ -77,7 +77,7 @@ export function MyPledges({ initialMe: _ignored }: { initialMe?: string }) {
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <h1 className="font-heading text-2xl font-bold text-foreground">My bounties</h1>
+        <h1 className="font-heading text-2xl font-bold text-foreground">My pledges</h1>
         <p className="mt-1 text-[15px] text-hl-muted">
           Every Holler you&apos;ve pledged, where it is, and what happens next.
         </p>
@@ -85,7 +85,7 @@ export function MyPledges({ initialMe: _ignored }: { initialMe?: string }) {
 
       {needsAuth ? (
         <div>
-          <button type="button" className="inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-bold text-primary-foreground transition-transform active:scale-[.97]" onClick={openSignIn}>Sign in to see My bounties</button>
+          <button type="button" className="inline-flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-bold text-primary-foreground transition-transform active:scale-[.97]" onClick={openSignIn}>Sign in to see your pledges</button>
         </div>
       ) : null}
       {error ? <p className="text-sm text-hl-danger">{error}</p> : null}

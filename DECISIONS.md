@@ -2785,3 +2785,17 @@ previous commit.
   them, and the rail says THE WAYS on wide screens. An "On air now" strip in
   its place was mocked and rejected. Undo: the .mcl-ways-title rule in
   ways-in.css.
+
+## 2026-11-16 — Bounty is the pot, a pledge is one fan's money
+
+- **The words, everywhere a person reads them**: a *bounty* is the pot on a
+  streamer, everything fans have put in, waiting to be claimed ("Top bounties",
+  "Claim this bounty"); a *pledge* is one fan's money toward it, noun or verb
+  ("Pledge amount", "Every pledge you make…"). A sweep of every visible string
+  in web/ found it held almost everywhere; the misses were the fan's own money
+  called a bounty: the record flow ("Bounty amount", "set the bounty", "Shown
+  beside your bounty", "first to claim takes the whole bounty", "one bounty, N
+  doors") and the fan's page "My bounties" (its file was already my-pledges.tsx),
+  now "My pledges" in its title, the account menu and the roadmap. The route
+  stays /bounty/mine. Server messages had no misuse. _gate-record-flow 24/0,
+  _gate-bounty-program 45/0.
