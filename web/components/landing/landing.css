@@ -1180,39 +1180,54 @@ body:has(.mc-landing) {
   .mcl-half .mcl-idea-row > p strong { white-space: normal; }
 }
 
-/* ── Rundown rail + safe area (owner, 2026-11-16) ──────────────────────────
-   The margins get a job, the way a show's running order does. V2 (Retro, the
-   default, "Pick A"): a hairline down the left gutter carrying SEG 01/02/03
-   with a timecode, the live one marked by a red dot, and faint safe-area
-   rules at the 1280 column edges. V1 (Classic, "Pick C"): the same hairline
-   with big outlined tally numerals, the live one lit red "On air", plus crop
-   marks at each section's top corners. Only where the gutter fits it (1536+);
-   the live marker is set by rundown-live.tsx. */
+/* ── Margins: minimal (owner, 2026-11-16) ──────────────────────────────────
+   Both looks: lit seams, a hairline of each band's colour where bands meet,
+   bright at the screen edges and fading to the middle, with a little haze
+   under it. Nothing else in the margins on V2 (Retro): the safe-area rules
+   along the column edges ran into the text, and the SEG rail read as corny,
+   so both went. V1 (Classic) keeps its tally rail (big outlined 01/02/03, the
+   live one lit "On air", crop marks) at 1536px and up, a candidate to bring
+   to V2 later; rundown-live.tsx sets the live one. Earlier takes (the film's
+   two lights, feature fog, grain) are on the landing canvas, rounds 4 and 5. */
 .mcl-run { position: relative; }
-.mcl-duo, .mcl-half { position: relative; }
+.mcl-duo, .mcl-half, .mcl-create-strip { position: relative; }
 .mcl-seg { display: none; }
 @media (min-width: 901px) {
   .mcl-create-strip, .mcl-footer { padding-inline: max(64px, calc((100% - 1280px) / 2)); }
 }
+
+/* lit seams */
+:is(.mcl-half, .mcl-create-strip)::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto;
+  height: 220px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, var(--seam) 0, transparent 22%, transparent 78%, var(--seam) 100%) 0 0 / 100% 1px no-repeat,
+    radial-gradient(420px 220px at 0% 0%, color-mix(in srgb, var(--seam) 14%, transparent), transparent 70%),
+    radial-gradient(420px 220px at 100% 0%, color-mix(in srgb, var(--seam) 14%, transparent), transparent 70%);
+}
+.mcl-half { --seam: color-mix(in srgb, var(--hk) 60%, transparent); }
+.mcl-create-strip { --seam: color-mix(in srgb, var(--hl-strap) 60%, transparent); }
+@media (prefers-reduced-transparency: reduce) {
+  :is(.mcl-half, .mcl-create-strip)::before { display: none; }
+}
+
+/* V1 · the tally rail */
 @media (min-width: 1536px) {
-  .mcl-run::before,
-  .mcl-run::after {
+  html[data-style='classic'] .mcl-run::before {
     content: "";
     position: absolute;
     z-index: 1;
     top: 0;
     bottom: 0;
+    left: calc(50% - 640px - 36px);
+    width: 1px;
     pointer-events: none;
+    background: rgba(150, 138, 120, 0.32);
   }
-  /* the rail */
-  .mcl-run::before { left: calc(50% - 640px - 36px); width: 1px; background: rgba(150, 138, 120, 0.32); }
-  /* the safe area: the column's two edges */
-  .mcl-run::after {
-    left: calc(50% - 640px);
-    width: 1280px;
-    border-inline: 1px solid rgba(150, 138, 120, 0.14);
-  }
-  .mcl-seg {
+  html[data-style='classic'] .mcl-seg {
     position: absolute;
     z-index: 2;
     top: 76px;
@@ -1222,7 +1237,7 @@ body:has(.mc-landing) {
     text-align: right;
     pointer-events: none;
   }
-  .mcl-seg::after {
+  html[data-style='classic'] .mcl-seg::after {
     content: "";
     position: absolute;
     top: 6px;
@@ -1231,20 +1246,8 @@ body:has(.mc-landing) {
     height: 1px;
     background: rgba(150, 138, 120, 0.5);
   }
-  .mcl-seg[data-live]::after { background: var(--hl-fg); }
-
-  /* V2 · the rail label */
-  .mcl-seg-rail { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-  .mcl-seg-rail small { display: inline-flex; align-items: center; gap: 6px; color: var(--hl-dim); font-size: 10px; letter-spacing: 0.16em; }
-  .mcl-seg-rail small i { display: none; width: 6px; height: 6px; border-radius: 50%; background: #ff3b30; }
-  .mcl-seg-rail b { color: var(--hl-muted); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-  .mcl-seg-rail em { color: var(--hl-dim); font-size: 10px; font-style: normal; letter-spacing: 0.06em; }
-  .mcl-seg[data-live] .mcl-seg-rail small { color: var(--hl-fg); }
-  .mcl-seg[data-live] .mcl-seg-rail small i { display: inline-block; }
-  .mcl-seg[data-live] .mcl-seg-rail b { color: var(--hl-fg); }
-
-  /* V1 · the tally */
-  .mcl-seg-tally { display: none; flex-direction: column; align-items: flex-end; gap: 8px; }
+  html[data-style='classic'] .mcl-seg[data-live]::after { background: var(--hl-fg); }
+  .mcl-seg-tally { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
   .mcl-seg-tally b {
     color: transparent;
     font-family: var(--font-display), var(--font-ui), sans-serif;
@@ -1261,12 +1264,9 @@ body:has(.mc-landing) {
   /* the live one says only ON AIR: the name beside it ran off a 160px gutter */
   .mcl-seg[data-live] .mcl-seg-tally small i { display: inline; }
   .mcl-seg[data-live] .mcl-seg-tally small span { display: none; }
-
-  /* V1 · crop marks at the column's top corners */
-  .mcl-crop { display: none; }
-  html[data-style='classic'] .mcl-seg-rail { display: none; }
-  html[data-style='classic'] .mcl-seg-tally { display: flex; }
-  html[data-style='classic'] .mcl-crop {
+  /* crop marks at the column's top corners; the marker's right edge is 52px
+     left of the column, so 40px past it is 12px outside the column's left edge */
+  .mcl-crop {
     position: absolute;
     top: -52px;
     display: block;
@@ -1274,74 +1274,21 @@ body:has(.mc-landing) {
     height: 18px;
     border-top: 1px solid color-mix(in srgb, var(--hl-fg) 45%, transparent);
   }
-  /* the marker's right edge is 52px left of the column: 40px past it is 12px outside the column's left edge */
-  html[data-style='classic'] .mcl-crop[data-side='l'] { left: calc(100% + 40px); border-left: 1px solid color-mix(in srgb, var(--hl-fg) 45%, transparent); }
-  html[data-style='classic'] .mcl-crop[data-side='r'] { left: calc(100% + 52px + 1280px + 12px - 18px); border-right: 1px solid color-mix(in srgb, var(--hl-fg) 45%, transparent); }
+  .mcl-crop[data-side='l'] { left: calc(100% + 40px); border-left: 1px solid color-mix(in srgb, var(--hl-fg) 45%, transparent); }
+  .mcl-crop[data-side='r'] { left: calc(100% + 52px + 1280px + 12px - 18px); border-right: 1px solid color-mix(in srgb, var(--hl-fg) 45%, transparent); }
 }
 
-/* the night mapping sets a flat ground; the create strip keeps its blue wash on top of it */
+/* the create strip wears the bands' style (owner, 2026-11-16): the same
+   panel ground and soft wash from the column's top-left corner, in its blue,
+   and a button like theirs, flat with no glow */
 .mc-landing .mcl-create-strip.mcl-night {
-  background: radial-gradient(circle at 12% 30%, color-mix(in srgb, var(--hl-strap) var(--mcl-wash), transparent), transparent 40%), var(--mcl-bg);
-}
-
-/* ── Atmosphere (owner, 2026-11-16, landing canvas round 5) ────────────────
-   V2 (Retro, the default) takes "Pick": the launch film's two lights carried
-   down the page (cool blue from the left, warm tungsten from the right), a
-   whisper of each band's colour at its edges, and fine film grain. V1
-   (Classic) takes "Lit seams" (the owner's second choice, kept on V1 to have
-   it live): a hairline of each band's colour where bands meet, bright at the
-   screen edges and fading to the middle, with a little haze under it.
-   Everything here only tints: screen-blended, never covering content, and
-   none of it moves. */
-.mcl-main { position: relative; }
-.mcl-atmos { display: none; }
-html:not([data-style='classic']) .mcl-atmos {
-  position: absolute;
-  z-index: 3;
-  inset: 0;
-  display: block;
-  pointer-events: none;
-  mix-blend-mode: screen;
   background:
-    radial-gradient(640px 70% at -120px 30%, rgba(40, 140, 255, 0.13), transparent 70%),
-    radial-gradient(560px 60% at -80px 85%, rgba(0, 200, 220, 0.07), transparent 70%),
-    radial-gradient(640px 70% at calc(100% + 120px) 45%, rgba(255, 140, 40, 0.12), transparent 70%),
-    radial-gradient(520px 55% at calc(100% + 80px) 92%, rgba(255, 90, 30, 0.06), transparent 70%);
+    radial-gradient(800px 360px at max(64px, calc((100% - 1280px) / 2)) 0%, color-mix(in srgb, var(--hl-strap) 5%, transparent), transparent 70%),
+    var(--mcl-panel);
 }
-html:not([data-style='classic']) .mcl-atmos::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  mix-blend-mode: overlay;
-  opacity: 0.06;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-/* the whisper of each band's colour, from both edges */
-html:not([data-style='classic']) .mcl-half::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  background:
-    radial-gradient(520px 90% at -60px 50%, color-mix(in srgb, var(--hk) 7%, transparent), transparent 70%),
-    radial-gradient(520px 90% at calc(100% + 60px) 50%, color-mix(in srgb, var(--hk) 7%, transparent), transparent 70%);
-}
-/* V1 · lit seams: where each band meets the one above */
-.mcl-create-strip { position: relative; }
-html[data-style='classic'] :is(.mcl-half, .mcl-create-strip)::before {
-  content: "";
-  position: absolute;
-  inset: -1px 0 auto;
-  height: 220px;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, var(--seam) 0, transparent 22%, transparent 78%, var(--seam) 100%) 0 0 / 100% 1px no-repeat,
-    radial-gradient(420px 220px at 0% 0%, color-mix(in srgb, var(--seam) 14%, transparent), transparent 70%),
-    radial-gradient(420px 220px at 100% 0%, color-mix(in srgb, var(--seam) 14%, transparent), transparent 70%);
-}
-html[data-style='classic'] .mcl-half { --seam: color-mix(in srgb, var(--hk) 60%, transparent); }
-html[data-style='classic'] .mcl-create-strip { --seam: color-mix(in srgb, var(--hl-strap) 60%, transparent); }
-@media (prefers-reduced-transparency: reduce) {
-  .mcl-atmos, .mcl-half::before, .mcl-create-strip::before { display: none !important; }
+.mc-landing .mcl-create-strip.mcl-night > a {
+  padding: 14px 22px;
+  border-radius: 8px;
+  font-size: 15px;
+  box-shadow: none;
 }

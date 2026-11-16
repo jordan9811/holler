@@ -41,12 +41,10 @@ const CAMPAIGN_IDEAS = [
 
 const PLATFORM_NAME: Record<string, string> = { twitch: 'Twitch', kick: 'Kick', x: 'X', youtube: 'YouTube', pumpfun: 'pump.fun' }
 
-/** One rundown marker: the Retro rail label and the Classic tally, both
- *  rendered; the look shows one (landing.css). Decoration: hidden from AT. */
-function Seg({ n, name, tc }: { n: string; name: string; tc: string }) {
+/** One tally marker for V1 (Classic) only (landing.css). Decoration: hidden from AT. */
+function Seg({ n, name }: { n: string; name: string }) {
   return (
     <span className="mcl-seg" aria-hidden="true">
-      <span className="mcl-seg-rail"><small><i />SEG {n}</small><b>{name}</b><em>{tc}</em></span>
       <span className="mcl-seg-tally"><b>{n}</b><small><i>On air</i><span>{name}</span></small></span>
       <span className="mcl-crop" data-side="l" /><span className="mcl-crop" data-side="r" />
     </span>
@@ -85,20 +83,17 @@ export function Landing({
 
       <LandingHero />
 
-      <main className="mcl-main">
-        {/* V2: the film's two lights down the page, plus fine grain (landing.css, "Atmosphere") */}
-        <span className="mcl-atmos" aria-hidden="true" />
+      <main>
         {/* Polish C (owner, 2026-11-16): one 1280 column. The three ways, one
             line of what keeps it fair, then each pitch as its own band: copy
             left, board right, stacked below 1100. */}
-        {/* The margins (owner, 2026-11-16): a TV rundown down the left gutter,
-            safe-area rules at the column edges. V2 (Retro) shows the rail as
-            SEG labels with timecodes; V1 (Classic) as big tally numerals with
-            the live one lit, plus crop marks. Wide screens only (landing.css). */}
+        {/* The margins (owner, 2026-11-16): lit seams between bands in both
+            looks; V1 (Classic) also keeps a tally rail of big numerals with the
+            live one lit, plus crop marks, on wide screens (landing.css). */}
         <div className="mcl-run">
         <RundownLive />
         <div className="mcl-duo">
-          <Seg n="01" name="The ways" tc="00:00:00:00" />
+          <Seg n="01" name="The ways" />
           <WaysIn />
           <ul className="mcl-trust" aria-label="How Holler keeps it fair">
             {TRUST.map(({ title, rest }) => (
@@ -110,7 +105,7 @@ export function Landing({
         {/* .dark: the boards stay at night in light mode too (Stone) */}
         <section className="mcl-bounty mcl-boards dark">
           <div className="mcl-half" data-k="bounty">
-            <Seg n="02" name="Bounties" tc="00:01:12:08" />
+            <Seg n="02" name="Bounties" />
             <div className="mcl-bounty-poster">
               <small className="mcl-band-k">Bounties</small>
               <h2>Your favorite streamer doesn&apos;t even know you.</h2>
@@ -141,7 +136,7 @@ export function Landing({
               There is no public list of campaigns, so the board is starting
               points: each opens the new-campaign form. */}
           <div className="mcl-half" data-k="campaign">
-            <Seg n="03" name="Campaigns" tc="00:02:03:17" />
+            <Seg n="03" name="Campaigns" />
             <div className="mcl-bounty-poster">
               <small className="mcl-band-k">Campaigns</small>
               <h2>New to streaming? Grow your audience with Holler.</h2>

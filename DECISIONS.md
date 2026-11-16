@@ -2799,3 +2799,14 @@ previous commit.
   now "My pledges" in its title, the account menu and the roadmap. The route
   stays /bounty/mine. Server messages had no misuse. _gate-record-flow 24/0,
   _gate-bounty-program 45/0.
+
+## 2026-11-16 — Margins pared back: lit seams in both looks
+
+- Supersedes the two earlier margin entries today. **Both looks: lit seams**
+  between bands, nothing else on V2. The safe-area rules along the column
+  edges (they ran into the text) and the V2 SEG rail ("corny") are gone, and
+  so is V2's two-light/fog/grain atmosphere. **V1 keeps its tally rail** (big
+  numerals, live one lit, crop marks) as a candidate to bring to V2 later.
+  The create strip now wears the bands' style: panel ground, a 5% blue wash
+  from the column's corner, a flat button. Every earlier take is on the
+  landing canvas, rounds 4 and 5.
