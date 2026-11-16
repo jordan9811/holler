@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, BadgeCheck, Mic, RotateCcw, ShieldCheck, Video, Wallet } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import type { PublicRoomCard } from '@/lib/api'
 import type { BountyPool } from '@/lib/bounty-api'
 import { formatDollars } from '@/lib/display-format'
@@ -11,30 +11,34 @@ import { LandingHero } from './landing-hero'
 import { WaysIn } from './ways-in'
 import './landing.css'
 
-// What keeps it fair, beside the three ways. Each line is true of the code
+// What keeps it fair, one line of checks under the three ways. Each is true of the code
 // today: every Holler clears the room's moderation (a person, or the
 // automatic check in an auto-moderated room); unpaid pledges and unspent
 // campaign budgets are refunded; payouts settle in USDC; a bounty pays only a
 // streamer who proves the channel on air (bounty-claim.config.js). "Instant"
 // was left off on purpose: a bounty pays on a verified broadcast, not at once.
 const TRUST = [
-  { k: 'holler', Icon: ShieldCheck, title: 'Checked before it airs', line: 'Every Holler clears the room’s moderation first.' },
-  { k: 'bounty', Icon: RotateCcw, title: 'Unused money comes back', line: 'Pledges and campaign budgets refund what isn’t paid out.' },
-  { k: 'rewards', Icon: Wallet, title: 'Paid in USDC', line: 'Payouts go straight to your wallet once they count.' },
-  { k: 'callin', Icon: BadgeCheck, title: 'Verified streamers', line: 'A bounty pays only a streamer who proves the channel on air.' },
+  { title: 'Every Holler checked', rest: ' before it airs' },
+  { title: 'Unused money comes back', rest: '' },
+  { title: 'Paid in USDC', rest: ', straight to your wallet' },
+  { title: 'Verified streamers', rest: ' collect bounties' },
 ] as const
 
 // Starting points for a streamer's first campaign, after the form's own
 // examples (campaign-form.tsx PLACEHOLDER).
 // Owner's picks, 2026-11-13: one prize, places, the followed-by rule ("mutual
 // follows": accounts the streamer follows that follow the viewer), and a
-// verified-follower minimum (minVerifiedFollowers). Four rows, like the bounty board beside it.
+// verified-follower minimum (minVerifiedFollowers). Four rows, like the bounty board.
+// Keyed by the feature's colour tab AND its name (owner, 2026-11-16: the tab
+// alone does not say what it means).
 const CAMPAIGN_IDEAS = [
-  { kind: 'holler', title: 'Funniest Holler tonight wins', detail: 'Holler / one prize, you pick', price: '$50' },
-  { kind: 'callin', title: 'Top 3 hot takes', detail: 'Call in / 1st $30 · 2nd $15 · 3rd $5', price: '$50' },
-  { kind: 'callin', title: '5 mutual follows? Get paid to call in', detail: 'Call in / followed by 5 people I follow', price: '$3' },
-  { kind: 'holler', title: '1,000+ verified followers? Get paid to Holler', detail: 'Holler / the first 50 that air', price: '$2' },
+  { kind: 'holler', title: 'Funniest Holler tonight wins', detail: 'one prize, you pick', price: '$50' },
+  { kind: 'callin', title: 'Top 3 hot takes', detail: '1st $30, 2nd $15, 3rd $5', price: '$50' },
+  { kind: 'callin', title: '5 mutual follows? Get paid to call in', detail: 'followed by 5 people I follow', price: '$3' },
+  { kind: 'holler', title: '1,000+ verified followers? Get paid to Holler', detail: 'the first 50 that air', price: '$2' },
 ] as const
+
+const PLATFORM_NAME: Record<string, string> = { twitch: 'Twitch', kick: 'Kick', x: 'X', youtube: 'YouTube', pumpfun: 'pump.fun' }
 
 function poolHref(pool: BountyPool): string {
   return pool.platform && pool.handle
@@ -69,37 +73,36 @@ export function Landing({
       <LandingHero />
 
       <main>
-        {/* Mock D (owner, 2026-11-11): the three ways with what keeps it fair
-            beside them, then the two pitches as equal boards: fans pledge,
-            streamers start a campaign. Each row stacks below 1280. */}
+        {/* Polish C (owner, 2026-11-16): one 1280 column. The three ways, one
+            line of what keeps it fair, then each pitch as its own band: copy
+            left, board right, stacked below 1100. */}
         <div className="mcl-duo">
           <WaysIn />
-          <aside className="mcl-trust" aria-label="How Holler keeps it fair">
-            {TRUST.map(({ k, Icon, title, line }) => (
-              <div key={title} className="mcl-trust-item" data-k={k}>
-                <span aria-hidden="true"><Icon size={18} strokeWidth={2} /></span>
-                <p><strong>{title}</strong><small>{line}</small></p>
-              </div>
+          <ul className="mcl-trust" aria-label="How Holler keeps it fair">
+            {TRUST.map(({ title, rest }) => (
+              <li key={title}><Check size={16} strokeWidth={2.25} aria-hidden="true" /><span><strong>{title}</strong>{rest}</span></li>
             ))}
-          </aside>
+          </ul>
         </div>
 
         {/* .dark: the boards stay at night in light mode too (Stone) */}
         <section className="mcl-bounty mcl-boards dark">
           <div className="mcl-half" data-k="bounty">
             <div className="mcl-bounty-poster">
+              <small className="mcl-band-k">Bounties</small>
               <h2>Your favorite streamer doesn&apos;t even know you.</h2>
-              <p>Be more than a username.</p>
-              <Link href="/bounty">Pledge your favorite streamer <ArrowRight size={16} aria-hidden="true" /></Link>
+              <p>Be more than a username. Pledge toward a bounty, and the streamer collects it by going live with Holler.</p>
+              <Link href="/bounty">Pledge your favorite streamer</Link>
             </div>
             <div className="mcl-mini-board">
-              <header><span>Top bounties</span><Link href="/bounty">Full board</Link></header>
+              <header><span><strong>Top bounties</strong>{boardPools.some((p) => p.displayOnly) ? <small>Examples</small> : null}</span><Link href="/bounty">Full board <ArrowRight size={14} aria-hidden="true" /></Link></header>
               {boardPools.length > 0 ? boardPools.map((pool, index) => (
                 <Link key={pool.handleKey} href={poolHref(pool)} className="mcl-pool-row">
-                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <span>{index + 1}</span>
                   <PoolThumb handle={pool.handle || pool.handleKey} platform={pool.platform} avatarUrl={pool.avatarUrl} />
-                  <p><strong>{pool.handle || pool.handleKey}</strong><small>{pool.platform || 'unlisted'} / {pool.contributionCount} backer{pool.contributionCount === 1 ? '' : 's'}</small></p>
-                  <b>{formatDollars(pool.remaining)}{pool.displayOnly ? <small> example</small> : null}</b>
+                  <p><strong>{pool.handle || pool.handleKey}</strong>{pool.contributionCount > 0 ? <small>{pool.contributionCount} backer{pool.contributionCount === 1 ? '' : 's'}</small> : null}</p>
+                  <em>{PLATFORM_NAME[pool.platform || ''] || pool.platform || 'Unlisted'}</em>
+                  <b>{formatDollars(pool.remaining)}</b>
                 </Link>
               )) : (
                 <div className="mcl-pool-empty">
@@ -116,17 +119,18 @@ export function Landing({
               points: each opens the new-campaign form. */}
           <div className="mcl-half" data-k="campaign">
             <div className="mcl-bounty-poster">
+              <small className="mcl-band-k">Campaigns</small>
               <h2>New to streaming? Grow your audience with Holler.</h2>
-              <p>Pay viewers to Holler or call in.</p>
-              <Link href="/dashboard/campaigns/new">Start a campaign <ArrowRight size={16} aria-hidden="true" /></Link>
+              <p>Pay viewers to Holler or call in. Set who qualifies; you only pay for what counts, and the rest comes back.</p>
+              <Link href="/dashboard/campaigns/new">Start a campaign</Link>
             </div>
             <div className="mcl-mini-board">
-              <header><span>Campaigns to try</span><Link href="/dashboard/campaigns">Your campaigns</Link></header>
+              <header><span><strong>Campaigns to try</strong><small>Examples</small></span><Link href="/dashboard/campaigns">Your campaigns <ArrowRight size={14} aria-hidden="true" /></Link></header>
               {CAMPAIGN_IDEAS.map((c) => (
-                <Link key={c.title} href="/dashboard/campaigns/new" className="mcl-pool-row mcl-idea-row">
-                  <span className="mcl-idea-kind" data-kind={c.kind} aria-hidden="true">{c.kind === 'holler' ? <Mic size={16} /> : <Video size={16} />}</span>
-                  <p><strong>{c.title}</strong><small>{c.detail}</small></p>
-                  <b>{c.price}<small> example</small></b>
+                <Link key={c.title} href="/dashboard/campaigns/new" className="mcl-pool-row mcl-idea-row" data-kind={c.kind}>
+                  <span aria-hidden="true" />
+                  <p><strong>{c.title}</strong><small><b>{c.kind === 'holler' ? 'Holler' : 'Call in'}</b> · {c.detail}</small></p>
+                  <b>{c.price}</b>
                 </Link>
               ))}
             </div>

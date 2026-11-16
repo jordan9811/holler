@@ -2727,3 +2727,19 @@ previous commit.
 - Undo: the old o is `border: 0` on `.hm-tc`; the old V1 is the three
   `--hm-*` values set back to `var(--hl-strap)`, `var(--hl-on-strap)`,
   `var(--hl-record)`, and `solid = px == null || px < 24`.
+
+## 2026-11-16 — Landing polish C: one column, bands, the tab named
+
+- **Everything under the hero sits in one 1280px column** (backgrounds still
+  run edge to edge). On a 1900px screen each half had held a ~350px column
+  with ~600px of nothing beside it. Owner picked Polish C from round 3 of the
+  landing canvas.
+- **What keeps it fair is one line of checks under the ways**, 15px, the claim
+  bold. No icon tiles: the pastel-chip-per-row pattern read as generated.
+- **Each pitch is its own band**: copy 5 parts, board 7, stacked below 1100.
+  Board rows are table rows (rank, avatar, name, where, amount); "Examples" is
+  said once in the board head, not per row. The 2026-11-06 440px condense is
+  gone: with the where column between, name and amount read as one row again.
+- **A campaign row is keyed by its feature tab AND the feature named in its
+  colour** (owner: the tab alone is not clear enough). Undo: landing.tsx and
+  the "Polish C" block at the end of landing.css.
