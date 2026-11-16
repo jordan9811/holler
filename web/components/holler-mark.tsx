@@ -1,17 +1,18 @@
 // The Holler mark (design-assets/holler-brand/SPEC.md §2): HOLLER set in a
-// slanted azure broadcast strap, the O drawn as a pink record button.
+// slanted blue broadcast strap, the O drawn as a pink record button.
 // Styles live in app/globals.css under the .hm- section.
 //
 //   variant  'full' strap + HOLLER (default) · 'icon' strap fragment "H◉"
 //            (app icon, avatars) · 'bare' letters only, no strap
-//   px       rendered font-size in px. Below 24 the O is a solid dot (the thin
+//   px       rendered font-size in px. Below 16 the O is a solid dot (the
 //            ring vanishes at small sizes). Omit it to size to 1em of the
-//            parent — header lockups — which also uses the solid dot.
+//            parent — header lockups — which keep the record ring (the V1
+//            mark since 2026-11-16, reference 02).
 //   glow     an azure drop-shadow on hero-size marks; dark theme only (light
 //            gets a soft shadow instead).
 //
 // Two looks share this one component. Retro (the default): lowercase holler
-// in Outfit, the o a round SMPTE test card. Classic: the strap above. Both are
+// in Outfit, the o a ring holding a round SMPTE test card. Classic: the strap above. Both are
 // rendered and the stylesheet shows one by <html data-style> (.hm-retro in
 // app/globals.css), so the switch needs no re-render and no flash.
 
@@ -28,7 +29,7 @@ export function HollerMark({
   glow?: boolean
   className?: string
 }) {
-  const solid = px == null || px < 24
+  const solid = px != null && px < 16
   const classes = ['hm', `hm--${variant}`, solid && 'hm--solid', glow && 'hm--glow', className]
     .filter(Boolean)
     .join(' ')

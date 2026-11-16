@@ -6,8 +6,10 @@
 //   holler-logo-dark.png  the wordmark on transparent, light letters — the
 //   holler-logo-light.png Privy sign-in modal's logo, one per modal theme
 //                       (appearance.logo in components/providers/privy-bridge.tsx)
-// apple-icon.png is not made here: it is the test-card o alone, the same art
-// as web/public/icon.svg (784fb90).
+//   apple-icon.png      180x180 home-screen icon: the o alone (cream ring,
+//                       test card inside) on studio black
+// web/public/icon.svg (the tab icon) is hand-drawn to the same proportions:
+// the card is 62% of the o.
 // The test card is drawn with the SAME .hm-tc CSS the site uses (read out of
 // web/app/globals.css), so the rasters cannot drift from the component.
 // Re-run whenever the brand look changes, then bump ?v= on /og.png in
@@ -59,13 +61,13 @@ const browser = await puppeteer.launch({
   executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
   headless: 'new',
 });
-async function render(html, width, height, path, { transparent = false } = {}) {
+async function render(html, width, height, path, { transparent = false, font = true } = {}) {
   const page = await browser.newPage();
   await page.setViewport({ width, height, deviceScaleFactor: transparent ? 2 : 1 });
   await page.setContent(html, { waitUntil: 'networkidle0' });
   await page.evaluate(() => document.fonts.ready);
   const ok = await page.evaluate(() => document.fonts.check('800 1em Outfit'));
-  if (!ok) throw new Error('Outfit did not load — check the network, then re-run');
+  if (font && !ok) throw new Error('Outfit did not load — check the network, then re-run');
   await new Promise((r) => setTimeout(r, 300));
   // a transparent raster is cropped to the mark itself
   const clip = transparent
@@ -76,6 +78,14 @@ async function render(html, width, height, path, { transparent = false } = {}) {
   console.log(`wrote ${path} (${clip.width}x${clip.height})`);
 }
 await render(og, 1200, 630, 'web/public/og.png');
+const appleIcon = `<!doctype html><html><head><meta charset="utf-8">
+<link href="${FONTS}" rel="stylesheet">
+<style>${base}
+  body { width: 180px; height: 180px; overflow: hidden; background: #0e0d0c; color: #f4efe6; display: grid; place-items: center; }
+  .hm { font-size: 150px; } /* the o is .53 × 1.62em ≈ 129px of 180 */
+  .hm .hm-tc { margin: 0; top: 0; }
+</style></head><body><span class="hm"><span class="hm-retro"><span class="hm-tc"></span></span></span></body></html>`;
+await render(appleIcon, 180, 180, 'web/public/apple-icon.png', { font: false }); // no letters: nothing to load
 await render(logo('#f4efe6'), 600, 200, 'web/public/holler-logo-dark.png', { transparent: true });
 await render(logo('#15120e'), 600, 200, 'web/public/holler-logo-light.png', { transparent: true });
 await browser.close();

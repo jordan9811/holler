@@ -2709,3 +2709,21 @@ previous commit.
   bump it on every re-render. The Privy logo is two files, one per modal
   theme. `apple-icon.png` was already the test card and is no longer made by
   the script.
+
+## 2026-11-16 — Both marks updated; V2 stays the default
+
+- **V2 (Retro, the default): the o is an ink ring with the test card inside**
+  (owner's pick from the Test-Card O sheet, "ink ring, bars inside"). The
+  ring is the letters' colour (`currentColor`, 0.1em of a 0.53em o), the card
+  62% of the o. One rule, `.hm .hm-tc` in `web/app/globals.css`; the tab icon
+  (`icon.svg`, ink ring with a cream hairline for dark tab strips), the
+  home-screen icon, the link-preview card and the Privy logos are re-rendered
+  from it (`scripts/generate-og.mjs`). Icons are `?v=5`, the card `?v=3`.
+- **V1 (Classic) is reference 02 from Holler Mark References**: white HOLLER on
+  a #1a6bff strap, a #ff1fa8 record ring. These are the mark's own tokens
+  (`--hm-strap`, `--hm-on-strap`, `--hm-record` on `.hm`), so the Classic
+  look's buttons and links keep the azure `--hl-strap`. Header lockups now keep
+  the ring; the solid dot is only below 16px (`holler-mark.tsx`).
+- Undo: the old o is `border: 0` on `.hm-tc`; the old V1 is the three
+  `--hm-*` values set back to `var(--hl-strap)`, `var(--hl-on-strap)`,
+  `var(--hl-record)`, and `solid = px == null || px < 24`.

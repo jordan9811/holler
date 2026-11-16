@@ -198,7 +198,7 @@
 
   /* Glows exist only in dark; light swaps them for soft shadows (SPEC §5). */
   --hl-glow-k: 1;
-  --hl-mark-glow: drop-shadow(0 0 18px color-mix(in srgb, #0a9bff 55%, transparent));
+  --hl-mark-glow: drop-shadow(0 0 18px color-mix(in srgb, #1a6bff 55%, transparent));
   --hl-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 40px -16px rgba(0, 0, 0, 0.7);
   --hl-glow-strap: 0 0 0 1px rgba(56, 176, 255, 0.5), 0 0 24px rgba(10, 155, 255, 0.4), 0 0 60px rgba(10, 155, 255, 0.22);
   --hl-glow-holler: 0 0 0 1px rgba(255, 43, 214, 0.5), 0 0 24px rgba(255, 43, 214, 0.3), 0 0 56px rgba(255, 43, 214, 0.16);
@@ -277,7 +277,7 @@
   --f-rewards-ui: var(--f-rewards-ink);
 
   --hl-glow-k: 0;
-  --hl-mark-glow: drop-shadow(0 6px 14px rgba(10, 132, 230, 0.24));
+  --hl-mark-glow: drop-shadow(0 6px 14px rgba(26, 107, 255, 0.24));
   --hl-shadow: 0 1px 2px rgba(20, 16, 40, 0.07), 0 10px 22px -14px rgba(20, 16, 40, 0.35);
   --hl-glow-strap: 0 0 0 1px rgba(10, 132, 230, 0.35), 0 8px 22px -6px rgba(10, 132, 230, 0.3);
   --hl-glow-holler: 0 0 0 1px rgba(224, 31, 189, 0.35), 0 8px 22px -6px rgba(224, 31, 189, 0.24);
@@ -678,12 +678,18 @@ html[data-ui='simple'] .adv-only { display: none !important; }
 html[data-ui='advanced'] .simple-only { display: none !important; }
 
 /* ── Holler mark (components/holler-mark.tsx · SPEC §2) ──────────────────────
-   HOLLER in a slanted azure broadcast strap; the O is a record button.
+   HOLLER in a slanted blue broadcast strap; the O is a record button. Since
+   2026-11-16 the Classic (V1) mark is "reference 02": white letters on
+   #1a6bff, a #ff1fa8 record ring. Its colours are the mark's own (--hm-*),
+   not the site's --hl-strap, so buttons and links keep their azure.
    Selectors are doubled on purpose: page headers style every span inside the
    lockup at (0,1,1) — e.g. `.mcb-product-brand span { font-size: 11px }` — and
    the mark must neither shrink nor recolour with them. With no px it is 1em of
    its parent; below 24px the O is a solid dot (.hm--solid). */
 .hm.hm {
+  --hm-strap: #1a6bff;
+  --hm-on-strap: #ffffff;
+  --hm-record: #ff1fa8;
   display: inline-block;
   vertical-align: middle;
   padding: 0;
@@ -706,8 +712,8 @@ html[data-ui='advanced'] .simple-only { display: none !important; }
   margin: 0;
   padding: 0.1em 0.6em 0.06em 0.3em;
   border: 0;
-  background: var(--hl-strap);
-  color: var(--hl-on-strap);
+  background: var(--hm-strap);
+  color: var(--hm-on-strap);
   clip-path: polygon(0 0, 100% 0, calc(100% - 0.4em) 100%, 0 100%);
   font-family: var(--font-display), 'Archivo', var(--font-ui), sans-serif;
   font-size: 1em;
@@ -740,11 +746,11 @@ html[data-ui='advanced'] .simple-only { display: none !important; }
   border-radius: 50%;
   font-size: inherit;
   vertical-align: baseline;
-  background: radial-gradient(circle closest-side, var(--hl-record) 0 62%, transparent 63%);
-  box-shadow: inset 0 0 0 0.06em var(--hl-record);
+  background: radial-gradient(circle closest-side, var(--hm-record) 0 62%, transparent 63%);
+  box-shadow: inset 0 0 0 0.06em var(--hm-record);
 }
 .hm.hm--solid .hm-o {
-  background: var(--hl-record);
+  background: var(--hm-record);
   box-shadow: none;
 }
 .hm.hm--bare .hm-strap {
@@ -934,8 +940,10 @@ html:not([data-style='classic']) .hm .hm-retro {
 html:not([data-style='classic']) .hm.hm--icon .hm-retro {
   font-size: 1.3em;
 }
-/* the o: a round SMPTE test card (seven bars, the castellation strip, the
-   bottom row), in the letters' x-height */
+/* the o: a ring in the letters' colour with a round SMPTE test card inside
+   (seven bars, the castellation strip, the bottom row), in the letters'
+   x-height. The card is 62% of the o (owner's pick 2026-11-16, "ink ring,
+   bars inside"); the bars are laid out in the padding box (background-origin), inside the ring. */
 /* font-size inherit: page headers set `… span { font-size: 11px }` at (0,1,1)
    inside the lockup, and the o is a span (see the .hm comment above) */
 .hm .hm-tc {
@@ -947,7 +955,8 @@ html:not([data-style='classic']) .hm.hm--icon .hm-retro {
   height: 0.53em;
   margin: 0 0.03em 0 0.035em;
   padding: 0;
-  border: 0;
+  box-sizing: border-box;
+  border: 0.1em solid currentColor;
   border-radius: 50%;
   font-size: inherit;
   background:
