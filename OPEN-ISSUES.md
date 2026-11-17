@@ -5172,3 +5172,23 @@ commit before); `_gate-dashboard-update`, `_gate-rooms-store`,
   publicity / false endorsement). Owner's call to ship it; get a lawyer's
   read before the public launch. Swapping the picture back is one file
   (`design-assets/pledge-picture/ways-bounty-OLD-couch.webp`).
+
+## 2026-11-17 — Found during the design pass
+
+- **DP1 — "0 of 100000 taken" on prize campaigns.** A prize campaign with no
+  entry cap stores `maxClaims` as the `MAX_PLACES` sentinel (100000), and both
+  the campaign detail ledger ("Places") and the campaigns list print it
+  (`campaign-detail.tsx` `{places} of {c.maxClaims} taken`,
+  `campaign-list.tsx`). With multi-winner prizes, "Places" also now reads as
+  the prize places (1st/2nd/3rd). Fix: for prize campaigns with no cap, show
+  the entry count alone ("0 entries") and keep "places" for the prize split.
+  Copy and logic, so out of the design pass's scope. Live on prod.
+- **DP2 — rooms-board header wraps to three rows at 390px** (logo + count,
+  then the links and switches, then Sign in). Pre-existing.
+- **DP3 — two muted greys.** `--hl-muted` and `--hl-dim` both survive in V2;
+  the system has one (`--c-muted`). Merge when the product CSS moves onto the
+  tokens for real.
+- **DP4 — the landing's tap targets.** 11 controls under 44px on phones (its
+  header switches, nav CTA, board links, footer). Left alone with the rest of
+  the signed-off landing; the invisible hit-area fix from the design pass
+  would change nothing visible there.

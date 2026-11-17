@@ -2826,3 +2826,23 @@ previous commit.
   Not shipped and left in place: overlay tile labels, drag-to-place, re-up/top-up,
   claims on more platforms, Follow my stream beyond Twitch and Kick, live AI
   moderation.
+
+## 2026-11-17 — Design pass (branch `design-pass`, not shipped)
+
+- **What**: the top 10 problems from `design-assets/design-pass/AUDIT.md`
+  fixed for V2 through one token file (`web/app/tokens.css`, 6 colours, 8
+  spacing steps, 6 type sizes, 2 weights) plus a generated type snap
+  (`web/app/tokens-snap.css`, from `design-assets/design-pass/gen-snap.cjs`).
+  Full record: `design-assets/design-pass/SUMMARY.md`.
+- **Why V2-only overrides instead of editing the source values**: Classic
+  uses the same files and the owner wanted it untouched; every rule is scoped
+  to `html:not([data-style='classic'])`, proved by a pixel diff of all 15
+  pages in Classic.
+- **Judgment calls**: the landing is left as signed off (its amounts,
+  headings and 11 small tap targets); the bounty bar keeps the owner's
+  2026-10-23 colours; How it works steps stay collapsed; the dashboard queue
+  keeps its data-lift placement; the Create strip keeps its blue as the Call
+  in key; generic actions are ink, so blue means only Call in.
+- **How to undo**: each step is its own commit (listed in SUMMARY.md); revert
+  any one. Removing the two imports in `web/app/layout.tsx` drops the whole
+  pass.
