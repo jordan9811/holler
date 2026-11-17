@@ -75,3 +75,24 @@
   --key-rewards: var(--c-rewards);
   --on-key: var(--c-bg);   /* the dark neutral: keys always carry dark text */
 }
+
+/* ── the frame (design pass, problem 1): one column for every page's header and
+   content, the site header's (max-w-6xl: 1152 with 24px gutters, so content
+   is 1104). V2 only: the Classic look keeps its own frames. The rooms board
+   (/app) is the app shell and stays full width on purpose. ── */
+:root { --col-inner: 1104px; }
+html:not([data-style='classic']) :is(.mch-product-header, .mcb-product-header, .mcc-product-header, .mcj-product-header, .mcp-header) > div {
+  max-width: var(--col);
+  padding-inline: var(--s-5);
+}
+html:not([data-style='classic']) :is(.mch-main, .mch-footer > div, .mcb-shell, .mcc-account-shell, .mcp-shell, .mcc-shell, .mcc-header-inner) {
+  width: min(var(--col-inner), calc(100% - 2 * var(--s-5)));
+}
+html:not([data-style='classic']) .join-shell { max-width: var(--col); padding-inline: var(--s-5); }
+/* the plain product shell (My pledges, a streamer's bounty page): no inner
+   wrapper, so the column comes from padding */
+html:not([data-style='classic']) .mc-product-header { padding-inline: max(var(--s-5), calc((100% - var(--col-inner)) / 2)); }
+html:not([data-style='classic']) .mc-product-main { max-width: var(--col); padding-inline: var(--s-5); }
+/* bounties: in the narrower column the hero's two columns collided (the
+   add-a-streamer box sat over the sub-line); the box goes under the copy */
+html:not([data-style='classic']) .mcb-hero { grid-template-columns: minmax(0, 1fr); align-items: start; }

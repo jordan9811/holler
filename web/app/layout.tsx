@@ -7,6 +7,7 @@ import { TempoWalletProvider } from '@/components/providers/tempo-wallet'
 import { UI_MODE_BOOT_SCRIPT } from '@/lib/ui-mode-boot'
 import { STYLE_BOOT_SCRIPT } from '@/lib/style-mode-boot'
 import './globals.css'
+import './tokens.css'
 import './product.css'
 
 const ui = Plus_Jakarta_Sans({ variable: '--font-ui', subsets: ['latin'], weight: ['400', '500', '600', '700', '800'] })
