@@ -337,3 +337,34 @@ html:not([data-style='classic']) .mcc-status-live i { width: 12px; height: 12px;
 }
 /* an enabled feature keeps its 3px key rule; the tinted gradient goes */
 html:not([data-style='classic']) .mcc-feature[data-enabled=true] { background: var(--hl-panel); }
+
+/* ── sparse pages (design pass, problem 8): a big headline over one line or
+   one short card, the rest of the canvas empty. In V2 an empty state is a
+   designed panel that spans the column, not a stray line top-left; a
+   section with nothing in it shows nothing (the rooms board ended on a
+   "Claimed pledges" heading over an empty list); and the plain product
+   header's page label is plain text like the others (3.4). ── */
+html:not([data-style='classic']) .mc-empty,
+html:not([data-style='classic']) .mcp-card.mcp-empty {
+  max-width: none;
+  padding: var(--s-7) var(--s-5);
+  border: 1px dashed var(--hl-line-2);
+  border-radius: var(--r);
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+  font-size: var(--t-3);
+  line-height: var(--lh-3);
+}
+html:not([data-style='classic']) .mcp-card.mcp-empty p { margin-inline: auto; max-width: 56ch; }
+html:not([data-style='classic']) .mcr-claimed:not(:has(.mcr-recent-grid)) { display: none; }
+html:not([data-style='classic']) .mc-product-header > span > :is(.ft.ft, .light .ft.ft, .light .dark .ft.ft) {
+  padding: 0;
+  border: 0;
+  color: var(--hl-muted);
+  font-weight: var(--w-regular);
+}
+html:not([data-style='classic']) .mc-product-header > span > .ft .ft-dot { display: none; }
+/* the streamer bounty page's lead tile: a panel, not a yellow wash (the
+   swatch beside its label carries the meaning) */
+html:not([data-style='classic']) .mc-tile { border-color: var(--hl-line-2); background: var(--hl-panel); }

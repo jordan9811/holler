@@ -91,7 +91,7 @@ export function MyPledges({ initialMe: _ignored }: { initialMe?: string }) {
       {error ? <p className="text-sm text-hl-danger">{error}</p> : null}
 
       {rows && rows.length === 0 ? (
-        <p className="text-sm text-muted-foreground">
+        <p className="mc-empty text-sm text-muted-foreground">
           Nothing yet. <a href="/bounty" className="font-semibold text-foreground underline decoration-hl-strap-hi decoration-2 underline-offset-4">Find a streamer to back →</a>
         </p>
       ) : null}

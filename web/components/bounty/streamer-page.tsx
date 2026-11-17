@@ -214,13 +214,13 @@ export function StreamerBountyPage({ platform, handle }: { platform: string; han
         <div className="grid gap-3 sm:grid-cols-3">
           {/* LOCKED leads. Always. Solid green swatch = locked to this name;
               the yellow hatch beside Contested = may go to a rival. */}
-          <div className="rounded-2xl border border-f-bounty-line bg-f-bounty-bg p-4">
+          <div className="mc-tile rounded-2xl border border-f-bounty-line bg-f-bounty-bg p-4">
             <p className="mc-label flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
               <span aria-hidden="true" className="h-2 w-3.5 shrink-0" style={LOCKED_SWATCH} />
               Locked to {handle}
               <span title="Theirs alone the moment they claim" aria-label="Locked to this name" className="inline-flex"><LockKeyhole className="size-3" aria-hidden="true" /></span>
             </p>
-            <p className="mt-1 font-heading text-2xl font-bold text-f-bounty-ink tabular">
+            <p className="mc-money-lead mt-1 font-heading text-2xl font-bold text-f-bounty-ink tabular">
               {view.guaranteed.toLocaleString()} <span className="text-sm">{currency}</span>
             </p>
             {cardTiers ? <TierLine tiers={cardTiers.locked} currency={currency} /> : null}
@@ -230,7 +230,7 @@ export function StreamerBountyPage({ platform, handle }: { platform: string; han
               <span aria-hidden="true" className="mr-0.5 h-2 w-3.5 shrink-0" style={CONTESTED_SWATCH} />
               <Swords className="size-3" /> Contested
             </p>
-            <p className="mt-1 font-heading text-2xl font-bold text-f-bounty-ink tabular">
+            <p className="mc-money-lead mt-1 font-heading text-2xl font-bold text-f-bounty-ink tabular">
               {view.contestedTotal.toLocaleString()} <span className="text-sm">{currency}</span>
             </p>
             <p className="mt-0.5 text-[11px] text-muted-foreground">
