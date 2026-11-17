@@ -447,3 +447,28 @@ html:not([data-style='classic']) .mcp-notice {
 }
 html:not([data-style='classic']) .mcp-notice .mcp-coordinate { color: var(--c-ink); }
 html:not([data-style='classic']) .mcp-notice p { font-size: var(--t-2); line-height: var(--lh-2); }
+
+/* ── create campaign (design pass, problem 10): a wall of equal weights.
+   Card edges took the colour of whatever was selected inside (a yellow
+   money card, a pink or blue action card) without saying why; selected
+   tiles were washed in feature gradients; active rules lit up in Call in
+   blue; helper text came in three sizes. In V2: cards are plain; a choice
+   is selected by an ink edge (its feature tag still names the feature); an
+   active rule reads by its ink toggle and bold title while the off ones
+   recede; helper text is one size. The preview column was already sticky
+   (the full-page capture made it look short). ── */
+html:not([data-style='classic']) .mcp-card[data-kind] { box-shadow: var(--e-1); }
+html:not([data-style='classic']) :is(.mcp-preview-card[data-kind='holler'], .mcp-preview-card[data-kind='callin']) { box-shadow: var(--e-1); }
+html:not([data-style='classic']) :is(.mcp-choice[aria-checked='true'][data-kind], .mcp-choice[aria-checked='true']:not([data-kind])) {
+  border-color: var(--c-ink);
+  background: var(--hl-panel);
+  box-shadow: inset 0 0 0 1px var(--c-ink);
+}
+html:not([data-style='classic']) .mcp-rule[data-on='true'] { background: var(--hl-panel); box-shadow: none; }
+html:not([data-style='classic']) .mcp-rule[data-on='true'] .mcp-toggle { background: var(--c-ink); box-shadow: none; }
+html:not([data-style='classic']) .mcp-rule:not([data-on='true']) .mcp-rule-head strong { font-weight: var(--w-regular); }
+html:not([data-style='classic']) .mcp-rule:not([data-on='true']) .mcp-rule-head small { color: var(--hl-dim); }
+html:not([data-style='classic']) .mcp-seg button[aria-checked='true'] { background: var(--c-ink); color: var(--c-bg); box-shadow: none; }
+html:not([data-style='classic']) .mcp-preview-reward { border-color: var(--hl-line-2); background: var(--hl-panel); }
+html:not([data-style='classic']) .mcp-card > header p { font-size: var(--t-2); line-height: var(--lh-2); }
+html:not([data-style='classic']) :is(.mcp-rule-head small, .mcp-field small, .mcp-preview-card > small, .mcp-preview-card .mcp-preview-notice) { font-size: var(--t-1); line-height: var(--lh-1); }
