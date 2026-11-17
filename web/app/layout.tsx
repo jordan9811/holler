@@ -7,6 +7,7 @@ import { TempoWalletProvider } from '@/components/providers/tempo-wallet'
 import { UI_MODE_BOOT_SCRIPT } from '@/lib/ui-mode-boot'
 import { STYLE_BOOT_SCRIPT } from '@/lib/style-mode-boot'
 import './globals.css'
+import './tokens-snap.css'
 import './tokens.css'
 import './product.css'
 

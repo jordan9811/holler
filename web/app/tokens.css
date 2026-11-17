@@ -472,3 +472,22 @@ html:not([data-style='classic']) .mcp-seg button[aria-checked='true'] { backgrou
 html:not([data-style='classic']) .mcp-preview-reward { border-color: var(--hl-line-2); background: var(--hl-panel); }
 html:not([data-style='classic']) .mcp-card > header p { font-size: var(--t-2); line-height: var(--lh-2); }
 html:not([data-style='classic']) :is(.mcp-rule-head small, .mcp-field small, .mcp-preview-card > small, .mcp-preview-card .mcp-preview-notice) { font-size: var(--t-1); line-height: var(--lh-1); }
+
+/* ── the type scale, finished (design pass, phase 3 sweep). tokens-snap.css
+   (generated, loaded before this file) maps every off-scale size and weight
+   in the product CSS to the scale. What it cannot see is set here:
+     · headings: the Retro look sets h1-h3 at 800; on product pages the
+       system has two weights, so they are 700 (the landing keeps 800);
+     · page titles were fluid (clamp 28-66px): app pages take --t-5, the
+       marketing heroes (how it works, roadmap, bounties) --t-6;
+     · the header nav was 13.5px semibold: --t-2 regular. ── */
+html:not([data-style='classic']) { --hl-hdr-nav: var(--t-2); --hl-hdr-nav-w: var(--w-regular); }
+html:not([data-style='classic']) :is(h1, h2, h3):where(:not(.mc-landing *)) { font-weight: var(--w-bold); }
+html:not([data-style='classic']) body :is(.mcp-title h1, .mcp-signed-out h1, .mch-section-heading h2, [class~='sm:text-[36px]']) {
+  font-size: var(--t-5);
+  line-height: var(--lh-5);
+}
+html:not([data-style='classic']) body :is(.mcb-hero h1, .mch-hero h1, .rm-intro h1) {
+  font-size: var(--t-6);
+  line-height: var(--lh-6);
+}
