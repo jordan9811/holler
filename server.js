@@ -36,7 +36,7 @@ import {
   roomsRefusal,
 } from './rooms-store.js';
 import { attachDashboardRoutes } from './dashboard-routes.js';
-import { getAccount } from './accounts.js';
+import { getAccount, provenLoginsFor } from './accounts.js';
 import { loginProvingHandle } from './bounty-auth.js';
 import { handleKey } from './bounty-store.js';
 import { getClipRecord } from './bounty-clips.js';
@@ -3822,6 +3822,41 @@ function applyClosePlans(now = Date.now()) {
   }
 }
 
+// ── the Twitch title for a room that does NOT follow (owner, 2026-11-17, asked
+// five times): the "On Twitch: … · Use this name" hint is for anyone whose
+// room is connected to Twitch and named by hand, whether or not "Open and
+// close with my Twitch stream" is on. Following rooms get their title from
+// the follow loop; the rest are asked here, from the manage page's own poll,
+// at most every TITLE_ASK_MS per channel, in the background (the first poll
+// answers null, the next carries the title). The channel is the room's own
+// twitchChannel, else the owner's proven Twitch login.
+const offTitle = new Map(); // login -> { title, at }
+const offTitleAsking = new Set();
+function titleLoginFor(roomId, cfg) {
+  const own = String(cfg?.twitchChannel || '').trim().replace(/^@/, '').toLowerCase();
+  if (own) return own;
+  const key = roomOwnerOf(roomId);
+  const acct = key ? getAccount(key) : null;
+  const login = acct ? provenLoginsFor(acct, 'twitch')[0] : null;
+  return login ? String(login).trim().replace(/^@/, '').toLowerCase() : null;
+}
+function offStreamTitle(roomId, cfg) {
+  const login = titleLoginFor(roomId, cfg);
+  if (!login) return null;
+  const seen = offTitle.get(login);
+  if ((!seen || Date.now() - seen.at > TITLE_ASK_MS) && !offTitleAsking.has(login) && twitchApiConfigured()) {
+    offTitleAsking.add(login);
+    getChannelTitlesByLogins([login])
+      .then((titles) => { if (titles) offTitle.set(login, { title: titles.get(login) || null, at: Date.now() }); })
+      .catch(() => {})
+      .finally(() => offTitleAsking.delete(login));
+  }
+  const title = seen?.title || null;
+  // "Use this name" reads followTitle: keep it in step for this room.
+  if (title) followTitle.set(roomId, title);
+  return title;
+}
+
 /** What the manage page shows about following: the state of the stream, the
  *  last title Twitch gave, and when the room will close on its own. */
 function followStatus(roomId) {
@@ -3834,8 +3869,8 @@ function followStatus(roomId) {
   return {
     following,
     state: !st ? null : st.live ? 'live' : st.endedLive ? 'ended' : 'waiting',
-    title: following ? followTitle.get(roomId) || null : null,
-    platform: following ? followTarget(cfg).platform : null,
+    title: following ? followTitle.get(roomId) || null : offStreamTitle(roomId, cfg),
+    platform: following ? followTarget(cfg).platform : (titleLoginFor(roomId, cfg) ? 'twitch' : null),
     closesAt: plan ? new Date(Math.max(plan.at, now)).toISOString() : null,
   };
 }

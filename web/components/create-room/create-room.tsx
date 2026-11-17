@@ -236,8 +236,11 @@ export function CreateRoom() {
   const pausingIn = useCountdown(managing && room.active && follow?.state === 'ended' ? follow.closesAt : null)
   // A name the streamer typed keeps the stream title from replacing it. Only
   // then, offer the title beside it: nothing shows when the name follows the
-  // stream or there is no title to offer (owner, 2026-11-07).
-  const twitchTitle = managing && follow?.following && room.nameSource === 'owner' && follow.title
+  // stream or there is no title to offer (owner, 2026-11-07). Shown whenever
+  // the room is connected to Twitch, following or not, and for a room named
+  // before nameSource existed (null) too (owner, 2026-11-17: the follow-only
+  // gate hid it from everyone who had not switched following on).
+  const twitchTitle = managing && room.nameSource !== 'twitch' && follow?.title
     && follow.title.trim() !== room.name.trim() && follow.title.trim() !== draft.name.trim() ? follow.title.trim() : null
   const [defaultsState, setDefaultsState] = useState<'idle' | 'busy' | 'saved'>('idle')
   const saveDefaultsNow = useCallback(async () => {

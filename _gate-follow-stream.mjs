@@ -19,7 +19,10 @@
  * window is seconds rather than five minutes.
  */
 import http from 'node:http';
-import { startGateServer } from './_gate-helpers.mjs';
+import { mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { startGateServer, mintBountyAuth } from './_gate-helpers.mjs';
 
 const PORT = 3287;
 const TWITCH_PORT = 3288;
@@ -35,7 +38,12 @@ const BEAT_STALE_MS = 5000;     // no beat this long = the page went quiet; also
 const MANAGER_TICK_MS = 250;
 // The keyed overlay: the server derives the room's key from AUTH_SECRET, so
 // the gate derives the same one (overlay-key.js overlayKeyFor).
-const AUTH_SECRET = 'follow-gate-overlay-secret';
+// One real signed account (section M9: a room whose owner has linked Twitch),
+// minted into the data dir before the server starts. Its secret is the
+// server's AUTH_SECRET, so the overlay keys below derive from it too.
+const DATA_DIR = mkdtempSync(path.join(tmpdir(), 'mc-gate-follow-'));
+const owner = mintBountyAuth({ handles: ['twitch:ownerstreamer'], dataDir: DATA_DIR });
+const AUTH_SECRET = owner.authSecret;
 process.env.AUTH_SECRET = AUTH_SECRET; // this process derives keys with it; the server is given it below
 const { overlayKeyFor } = await import('./overlay-key.js');
 const overlayKey = (roomId) => overlayKeyFor(roomId);
@@ -58,6 +66,8 @@ let live = false;
 // move the first room: `live` stays false while they run.
 const liveSet = new Set();
 const titles = new Map();
+// The title Twitch keeps on a channel while it is offline (/helix/channels).
+const offlineTitles = new Map();
 let helixCalls = 0;
 let maxLoginsInOneCall = 0;
 
@@ -76,6 +86,19 @@ const twitch = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     return res.end(JSON.stringify({ data }));
   }
+  // The offline title lookup (getChannelTitlesByLogins): /users for the ids,
+  // /channels for the title Twitch keeps while the channel is dark.
+  if (url.pathname === '/helix/users') {
+    const data = url.searchParams.getAll('login').map((l, i) => ({ id: `u-${l}`, login: l }));
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify({ data }));
+  }
+  if (url.pathname === '/helix/channels') {
+    const data = url.searchParams.getAll('broadcaster_id')
+      .map((id) => ({ broadcaster_id: id, title: offlineTitles.get(id.replace(/^u-/, '')) || '' }));
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    return res.end(JSON.stringify({ data }));
+  }
   res.writeHead(404).end('{}');
 });
 await new Promise((r) => twitch.listen(TWITCH_PORT, r));
@@ -84,7 +107,9 @@ await new Promise((r) => twitch.listen(TWITCH_PORT, r));
 const { child, dataDir } = await startGateServer({
   port: PORT,
   label: 'follow-stream',
+  dataDir: DATA_DIR,
   env: {
+    ...owner.env,
     TWITCH_CLIENT_ID: 'gate-client',
     TWITCH_CLIENT_SECRET: 'gate-secret',
     TWITCH_ID_BASE: `http://localhost:${TWITCH_PORT}`,
@@ -392,6 +417,37 @@ try {
   ok('M7 a room created WITHOUT a name takes the stream title',
     await until('titled', async () => (await session(blankId)).room?.name === 'Blank Room Title'));
   liveSet.delete('blankstreamer');
+
+  // ── M8-M9. the title hint when the room does NOT follow (owner, 2026-11-17).
+  // "On Twitch: … · Use this name" is for any room connected to Twitch and
+  // named by hand; it used to need "Open and close with my Twitch stream" on.
+  offlineTitles.set('quietstreamer', 'Quiet Channel Title');
+  const quietCreate = await api('/api/dashboard/create', {
+    method: 'POST',
+    body: JSON.stringify({ name: 'Hand Named', password: PW, config: { twitchChannel: 'quietstreamer', twitchAuto: false, unlisted: false } }),
+  });
+  const quietId = quietCreate.body?.roomId || quietCreate.body?.room?.id;
+  s = await session(quietId);
+  ok('M8 a room naming a channel, following OFF, is offered the channel title',
+    s.follow?.following === false
+      && await until('offered', async () => (await session(quietId)).follow?.title === 'Quiet Channel Title'),
+    `following=${s.follow?.following} title=${(await session(quietId)).follow?.title}`);
+  await putRoom(quietId, { useTwitchTitle: true });
+  s = await session(quietId);
+  ok('M8b …and "Use this name" takes it',
+    s.room?.name === 'Quiet Channel Title' && s.room?.nameSource === 'twitch', `name=${s.room?.name}`);
+  // No channel on the room at all: the title comes from the owner's own
+  // proven Twitch login (a real signed session, no bypass).
+  offlineTitles.set('ownerstreamer', 'Owner Channel Title');
+  const ownedCreate = await fetch(`${APP}/api/dashboard/create`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Cookie: owner.cookieFor('twitch:ownerstreamer') },
+    body: JSON.stringify({ name: 'My Own Words', password: PW, config: { unlisted: false } }),
+  }).then((r) => r.json().catch(() => ({})));
+  const ownedId = ownedCreate.roomId || ownedCreate.room?.id;
+  ok('M9 a room with no channel is offered its owner’s Twitch title',
+    !!ownedId && await until('offered', async () => (await session(ownedId)).follow?.title === 'Owner Channel Title'),
+    `room=${ownedId} title=${ownedId ? (await session(ownedId)).follow?.title : '-'}`);
 
   // ── G. airings: the record a "recently aired" board is built on ─────────
   // Runs before F because F kills the fake Twitch.
