@@ -161,7 +161,7 @@ export function StreamerBountyPage({ platform, handle }: { platform: string; han
         <div className="min-w-0">
           <h1 className="flex flex-wrap items-baseline gap-2 font-heading text-2xl font-bold text-foreground">
             {handle}
-            <span className="text-xs font-normal uppercase tracking-wide text-muted-foreground">{platform}</span>
+            <span className="mc-label text-xs font-normal uppercase tracking-wide text-muted-foreground">{platform}</span>
             {claimedBy ? (
               <span className="inline-flex items-center gap-1 rounded-full border border-f-rewards-line bg-f-rewards-bg px-2 py-0.5 text-[10px] font-bold tracking-normal text-f-rewards-ink">
                 <CircleCheck className="size-3" /> claimed
@@ -215,7 +215,7 @@ export function StreamerBountyPage({ platform, handle }: { platform: string; han
           {/* LOCKED leads. Always. Solid green swatch = locked to this name;
               the yellow hatch beside Contested = may go to a rival. */}
           <div className="rounded-2xl border border-f-bounty-line bg-f-bounty-bg p-4">
-            <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+            <p className="mc-label flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
               <span aria-hidden="true" className="h-2 w-3.5 shrink-0" style={LOCKED_SWATCH} />
               Locked to {handle}
               <span title="Theirs alone the moment they claim" aria-label="Locked to this name" className="inline-flex"><LockKeyhole className="size-3" aria-hidden="true" /></span>
@@ -226,7 +226,7 @@ export function StreamerBountyPage({ platform, handle }: { platform: string; han
             {cardTiers ? <TierLine tiers={cardTiers.locked} currency={currency} /> : null}
           </div>
           <div className="rounded-2xl border border-border/70 bg-card/50 p-4">
-            <p className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+            <p className="mc-label flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
               <span aria-hidden="true" className="mr-0.5 h-2 w-3.5 shrink-0" style={CONTESTED_SWATCH} />
               <Swords className="size-3" /> Contested
             </p>
@@ -241,7 +241,7 @@ export function StreamerBountyPage({ platform, handle }: { platform: string; han
             {cardTiers && view.contestedTotal > 0 ? <TierLine tiers={cardTiers.contested} currency={currency} /> : null}
           </div>
           <div className="rounded-2xl border border-border/70 bg-card/50 p-4">
-            <p className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+            <p className="mc-label flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
               <Users className="size-3" /> Backers
             </p>
             <p className="mt-1 font-heading text-2xl font-bold text-foreground tabular">{view.contributionCount}</p>

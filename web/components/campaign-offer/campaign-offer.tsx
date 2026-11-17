@@ -40,7 +40,7 @@ const secondaryCta = 'inline-flex items-center justify-center rounded-lg border 
 function Fingerprint({ set, label }: { set: SetFingerprint; label: string }) {
   return (
     <section className="rounded-2xl border border-hl-line bg-hl-panel p-5">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-hl-dim">{label}</p>
+      <p className="mc-label text-[11px] font-semibold uppercase tracking-[0.14em] text-hl-dim">{label}</p>
       <h3 className="mt-1 text-[17px] font-bold text-hl-fg">{set.name}</h3>
       <p className="mt-1 text-[13px] text-hl-muted">{set.count.toLocaleString('en-US')} accounts, frozen {fmtDate(set.snapshotAt)}.</p>
       <details className="mt-3 text-[13px]">

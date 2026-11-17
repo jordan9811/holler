@@ -131,3 +131,38 @@ html:not([data-style='classic']) .mc-landing .mcl-create-strip {
 }
 /* the landing names its own text-on-strap colour; in V2 it follows the strap */
 html:not([data-style='classic']) :is(.mc-landing, .mc-landing .mcl-create-strip) { --mcl-on-strap: var(--hl-on-strap); }
+
+/* ── one label style (design pass, problem 3). Tiny letter-spaced mono caps
+   (ROOM NAME, AVAILABLE BALANCE, WHO QUALIFIES) sat beside sans caps and two
+   helper sizes. In V2 every field, column and section label is the same
+   thing: sentence case (the copy already is; only CSS shouted it), --t-1,
+   bold, muted, no tracking, the text face. Mono stays for URLs, codes and
+   timers; tags and statuses are problem 4. ── */
+html:not([data-style='classic']) :is(
+  .mcp-th, .mcp-approve dt, .mcp-ledger dt, .mcp-rule-group-title, .mcp-claim-row > [role='cell']::before,
+  .mcc-section-nav > div > span, .mcc-overview-status header small, .mcc-connections-list li > b, .mcc-wallet-line > b,
+  .mc-account .colhead, .mcc-guests-add label, .mcc-rewards-figures dt,
+  .mcc-eyebrow, .mcc-preview-top > b, .mcc-concept-label, .mcc-obs-autonote b,
+  .join-mode-zone header > span, .mc-bounty .colhead, .mcb-open-count, .mch-section-heading span, .mc-label,
+  .mcp-coordinate, .mcb-coordinate, .join-coordinate, .mcc-coordinate, .mch-coordinate
+) {
+  font-family: var(--font-text);
+  font-size: var(--t-1);
+  line-height: var(--lh-1);
+  font-weight: var(--w-bold);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--hl-muted);
+}
+/* the same label, where the colour carries state (the campaign ladder's
+   current step, the room's on-air readout) or the label is a pseudo-element
+   (which :is() cannot hold): face, size and case only */
+html:not([data-style='classic']) :is(.mcp-ladder li, .join-live-label),
+html:not([data-style='classic']) .mcp-claim-row > [role='cell']::before {
+  font-family: var(--font-text);
+  font-size: var(--t-1);
+  line-height: var(--lh-1);
+  font-weight: var(--w-bold);
+  letter-spacing: 0;
+  text-transform: none;
+}

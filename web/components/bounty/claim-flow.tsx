@@ -330,7 +330,7 @@ export function ClaimFlow({
 
           <div className="grid grid-cols-3 gap-3 rounded-xl border border-border/70 bg-background/40 p-3 text-center">
             <div>
-              <p className="flex items-center justify-center gap-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+              <p className="mc-label flex items-center justify-center gap-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
                 <Radio className="size-3" /> Verified
               </p>
               <p className="mt-0.5 font-heading text-lg font-bold text-foreground tabular">
@@ -341,7 +341,7 @@ export function ClaimFlow({
               </p>
             </div>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-wide text-muted-foreground">Released</p>
+              <p className="mc-label text-[10px] font-bold uppercase tracking-wide text-muted-foreground">Released</p>
               <p className="mt-0.5 font-heading text-lg font-bold text-f-rewards-ink tabular">
                 {formatDollars(released)}
               </p>
@@ -350,7 +350,7 @@ export function ClaimFlow({
               ) : null}
             </div>
             <div>
-              <p className="flex items-center justify-center gap-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
+              <p className="mc-label flex items-center justify-center gap-1 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">
                 <Clock className="size-3" /> Remaining
               </p>
               <p className="mt-0.5 font-heading text-lg font-bold text-f-bounty-ink tabular">
