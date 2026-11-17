@@ -532,3 +532,13 @@ html:not([data-style='classic']) body :is(.mcb-hero h1, .mch-hero h1, .rm-intro 
     transform: translate(-50%, -50%);
   }
 }
+
+/* the empty stages keep their blue (owner, 2026-11-17): the no-preview art on
+   the rooms board cards, the room page and the dashboard preview glows in the
+   studio azure. 3.2 turned the generic action colour these draw on to ink;
+   here it is the Call in key again (a stage is where people call in).
+   Doubled selectors: the stages carry .dark, whose ink rule is the same
+   weight. */
+html:not([data-style='classic']) :is(.mcr-stage.mcr-stage, .join-media-stage.join-media-stage, .mcc-stage.mcc-stage) {
+  --hl-strap: var(--f-callin);
+}

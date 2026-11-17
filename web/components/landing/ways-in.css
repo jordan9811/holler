@@ -46,7 +46,7 @@
   opacity: 0;
   transition: opacity .32s cubic-bezier(.23, 1, .32, 1);
 }
-.mcl-ways-shot[data-shot='holler'] { background-image: url('/landing/ways-holler.webp'); }
+.mcl-ways-shot[data-shot='holler'] { background-image: url('/landing/ways-holler.webp?v=3'); }
 .mcl-ways-shot[data-shot='callin'] { background-image: url('/landing/ways-callin.webp'); }
 .mcl-ways-shot[data-shot='bounty'] { background-image: url('/landing/ways-bounty.webp?v=2'); }
 .mcl-ways-stage[data-way='holler'] [data-shot='holler'],
@@ -129,10 +129,13 @@
   letter-spacing: .08em;
 }
 
-/* Call in: your seat and an open one, stacked in the shelf corner. */
+/* Call in: your seat and an open one, stacked on the LEFT (owner,
+   2026-11-17): the Holler tab puts its clip on the right, so the boxes
+   changing sides between tabs quietly shows that tiles can be placed.
+   Below the LIVE chip, which holds the top-left corner. */
 .mcl-ways-ov-callin {
-  right: 3%;
-  top: 5%;
+  left: 3%;
+  top: 13%;
   width: 21%;
   display: grid;
   gap: 8px;

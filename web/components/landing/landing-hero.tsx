@@ -88,7 +88,7 @@ export function LandingHero() {
         <img src="/launch-film-poster.jpg" alt="" className="mcl-film-media" />
         <video
           ref={videoRef}
-          src="/launch-film.mp4"
+          src="/launch-film.mp4?v=2"
           poster="/launch-film-poster.jpg"
           autoPlay
           muted
@@ -168,7 +168,7 @@ export function LandingHero() {
         </h1>
         <p className="mcl-sub mcl-r3">Camera seats on live broadcasts, billed by the second.</p>
         <div className="mcl-ctas mcl-r3">
-          <Link href="/app" className="mcl-btn-primary">Enter Holler</Link>
+          <Link href="/app" className="mcl-btn-primary">Enter app</Link>
           <button type="button" onClick={openTheater} className="mcl-btn-ghost" aria-haspopup="dialog">
             Watch the film
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -191,7 +191,7 @@ export function LandingHero() {
       >
         <video
           ref={filmRef}
-          src="/launch-film-1080.mp4"
+          src="/launch-film-1080.mp4?v=2"
           poster="/launch-film-poster.jpg"
           controls
           playsInline
