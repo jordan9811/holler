@@ -66,6 +66,15 @@
   --tap: 44px;       /* minimum tap target */
 }
 
+/* a light island inside a dark page takes the light neutrals back */
+.light {
+  --c-bg: #e9e3d7;
+  --c-ink: #15120e;
+  --key-bounty: color-mix(in oklab, var(--c-bounty) 55%, var(--c-ink));
+  --key-rewards: color-mix(in oklab, var(--c-rewards) 55%, var(--c-ink));
+  --on-key: var(--c-ink);
+}
+
 /* dark: only the two neutrals change; the keys read on black as they are */
 :root.dark,
 .dark {
@@ -96,3 +105,29 @@ html:not([data-style='classic']) .mc-product-main { max-width: var(--col); paddi
 /* bounties: in the narrower column the hero's two columns collided (the
    add-a-streamer box sat over the sub-line); the box goes under the copy */
 html:not([data-style='classic']) .mcb-hero { grid-template-columns: minmax(0, 1fr); align-items: start; }
+
+/* ── colour has one meaning (design pass, problem 2). Blue was Call in AND the
+   generic action (Sign in, Enter app, links, focus rings). In V2 the generic
+   action is ink: every button, link and ring that drew on --hl-strap now
+   draws on ink, so blue is left meaning Call in (--f-callin, untouched).
+   Declared on every theme scope so a .dark or .light island resolves its own
+   ink, not the page's. Classic keeps its azure. ── */
+html:not([data-style='classic']),
+html:not([data-style='classic']) .dark,
+html:not([data-style='classic']) .light {
+  --hl-strap: var(--c-ink);
+  --hl-strap-hi: var(--c-ink);
+  --hl-strap-hover: color-mix(in oklab, var(--c-ink) 84%, var(--c-bg));
+  --hl-on-strap: var(--c-bg);
+}
+/* the one exception: the landing's Create-a-room band stays blue (owner,
+   2026-11-16, "should mirror the color style of above"); a room is where
+   people call in, so it takes the Call in key, not a generic blue */
+html:not([data-style='classic']) .mc-landing .mcl-create-strip {
+  --hl-strap: var(--f-callin);
+  --hl-strap-hi: var(--f-callin);
+  --hl-strap-hover: var(--f-callin-ink);
+  --hl-on-strap: #060a17;
+}
+/* the landing names its own text-on-strap colour; in V2 it follows the strap */
+html:not([data-style='classic']) :is(.mc-landing, .mc-landing .mcl-create-strip) { --mcl-on-strap: var(--hl-on-strap); }
