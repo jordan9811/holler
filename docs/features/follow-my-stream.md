@@ -50,8 +50,9 @@ A press of Start holds the room only until the manage page speaks: a hold that o
 While the channel is live, a room nobody named takes the stream's title, so the board and the Twitch directory say the same thing. A name the owner typed is theirs: the title no longer replaces it (`nameSource` on the room record, `rooms-store.js`; the rename rule in `followTick`, `server.js`).
 
 - A name typed at creation, or edited later, marks the room `nameSource: 'owner'`. A save that repeats the name the room already has does not (the dashboard `PUT` in `dashboard-routes.js`), and the manage page sends the name only when the field was edited, so an autosave carrying a stale name cannot claim it (`nameEditedRef`, `web/components/room-provider.tsx`).
-- Only then, the manage page shows the Twitch title in small text under the name field, with **Use this name**. That takes the title now and follows it from then on (`useTwitchTitle` in the dashboard `PUT`). Nothing shows when the name follows the stream.
-- Older rooms, with no `nameSource`, follow the title until the owner types a name.
+- When the room's name is not the stream's, the manage page shows the Twitch title in small text under the name field, with **Use this name**. That takes the title now and follows it from then on (`useTwitchTitle` in the dashboard `PUT`). Nothing shows when the name follows the stream (`nameSource: 'twitch'`) or already matches the title.
+- The hint does not need following on. Any room connected to Twitch gets it: the room's `twitchChannel`, else the owner's proven Twitch login. A room that does not follow has its title fetched in the background from the manage page's poll, at most every ten minutes per channel (`offStreamTitle` / `titleLoginFor`, `server.js`; gate `_gate-follow-stream.mjs` M8, M8b, M9).
+- Older rooms, with no `nameSource`, follow the title until the owner types a name, and are offered the hint like any hand-named room.
 
 The comparison is by character, through the store's own 64-character cut, so an emoji at the cut is not read as a change every minute (`clampRoomName`, `rooms-store.js`).
 
