@@ -8,7 +8,7 @@
        or as the one action on that feature's own surface, never as body text,
        a tinted background or a gradient. Primary actions elsewhere are ink.
      · No gradients. One elevation (--e-1). Borders only where they separate
-       (--line), never as decoration.
+       (--c-line), never as decoration.
      · Spacing is 8 steps on a 4px base. Type is 6 sizes, 2 weights.
      · Money is always ink, tabular, in --t-4 in rows and lists.
      · Mono (--font-code) is for URLs, codes and timers only. */
@@ -23,10 +23,10 @@
   --c-rewards: #39ff6a;
 
   /* ── derived, not tokens: every surface and line is ink mixed into bg ── */
-  --surface: color-mix(in oklab, var(--c-ink) 3%, var(--c-bg));
-  --surface-2: color-mix(in oklab, var(--c-ink) 6%, var(--c-bg));
-  --muted: color-mix(in oklab, var(--c-ink) 68%, var(--c-bg));   /* secondary text, >= 4.5:1 on bg */
-  --line: color-mix(in oklab, var(--c-ink) 14%, var(--c-bg));
+  --c-surface: color-mix(in oklab, var(--c-ink) 3%, var(--c-bg));
+  --c-surface-2: color-mix(in oklab, var(--c-ink) 6%, var(--c-bg));
+  --c-muted: color-mix(in oklab, var(--c-ink) 68%, var(--c-bg));   /* secondary text, >= 4.5:1 on bg */
+  --c-line: color-mix(in oklab, var(--c-ink) 14%, var(--c-bg));
   --on-key: var(--c-ink);                                          /* text on any feature key */
   /* a key drawn on paper needs 3:1 as a graphic: bright keys deepen toward ink */
   --key-holler: var(--c-holler);
@@ -53,7 +53,9 @@
   --t-6: 44px; --lh-6: 48px;   /* marketing heroes only */
   --w-regular: 400;
   --w-bold: 700;
-  --font-display: var(--font-retro), 'Outfit', system-ui, sans-serif;  /* --t-4 and up */
+  /* display face: --font-display (Archivo in Classic, Outfit in V2, set by
+     next/font and the globals Retro block; not redeclared here, it would
+     override Classic's) for --t-4 and up */
   --font-text: var(--font-ui), 'Plus Jakarta Sans', system-ui, sans-serif;
 
   /* ── shape and depth ── */
@@ -182,7 +184,7 @@ html:not([data-style='classic']) .mcp-claim-row > [role='cell']::before {
 html:not([data-style='classic']) :is(.ft.ft, .light .ft.ft, .light .dark .ft.ft) {
   gap: var(--s-1);
   padding: 2px var(--s-2);
-  border: 1px solid var(--line);
+  border: 1px solid var(--c-line);
   border-radius: var(--r-pill);
   background: transparent;
   color: var(--c-ink);
@@ -306,7 +308,7 @@ html:not([data-style='classic']) .mc-bounty .lb-row .rowcta-ghost {
   font-size: var(--t-2);
   font-weight: var(--w-bold);
   text-decoration: underline;
-  text-decoration-color: var(--line);
+  text-decoration-color: var(--c-line);
   text-underline-offset: 4px;
 }
 @media (hover: hover) and (pointer: fine) {
