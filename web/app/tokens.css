@@ -368,3 +368,82 @@ html:not([data-style='classic']) .mc-product-header > span > .ft .ft-dot { displ
 /* the streamer bounty page's lead tile: a panel, not a yellow wash (the
    swatch beside its label carries the meaning) */
 html:not([data-style='classic']) .mc-tile { border-color: var(--hl-line-2); background: var(--hl-panel); }
+
+/* ── emphasis follows importance (design pass, problem 9) ──
+   Account: the largest text was "@handle" in a gradient hero, then "Not
+   connected" (an empty state) at 44px. In V2 the identity is a page title
+   (--t-5) on a flat panel; the balance panel is a panel, its amount (when
+   there is one) keeps the page's largest size in ink, and the empty state
+   is --t-4 muted with the action under it as the one primary button. */
+html:not([data-style='classic']) .mcc-identity-hero { min-height: 0; padding: var(--s-6) var(--s-6); background: var(--hl-panel); align-items: center; }
+html:not([data-style='classic']) .mcc-identity-hero h1 {
+  margin: 0;
+  color: var(--c-ink);
+  font-size: var(--t-5);
+  line-height: var(--lh-5);
+  letter-spacing: -0.02em;
+}
+html:not([data-style='classic']) :is(.mcc-balance-zone, .mcc-room-zone) {
+  min-height: 0;
+  gap: var(--s-2);
+  padding: var(--s-5);
+  border: 1px solid var(--hl-line-2);
+  border-radius: var(--r);
+  background: var(--hl-panel);
+}
+html:not([data-style='classic']) .mcc-balance-zone { border-left: 3px solid var(--key-bounty); }
+html:not([data-style='classic']) .mcc-room-zone { border-left: 3px solid var(--key-callin); }
+html:not([data-style='classic']) .mcc-balance-zone > strong { margin: var(--s-2) 0 0; color: var(--c-ink); font-variant-numeric: tabular-nums; }
+html:not([data-style='classic']) .mcc-balance-zone > strong.mcc-balance-state {
+  margin: var(--s-1) 0 var(--s-3);
+  color: var(--hl-muted);
+  font-size: var(--t-4);
+  line-height: var(--lh-4);
+  letter-spacing: 0;
+}
+html:not([data-style='classic']) .mcc-balance-zone :is(button, a) {
+  min-height: var(--tap);
+  padding: 0 var(--s-4);
+  border: 0;
+  border-radius: var(--r);
+  background: var(--c-ink);
+  color: var(--c-bg);
+  font-size: var(--t-2);
+  font-weight: var(--w-bold);
+}
+html:not([data-style='classic']) :is(.mcc-balance-zone, .mcc-room-zone) p { font-size: var(--t-2); line-height: var(--lh-2); }
+
+/* How it works: the "camera seat" result box was the largest text on the
+   page, mid-page, on a blue wash, above the steps it summarises. In V2 it
+   is a card title (--t-5 is the page-title size; this is --t-4 bold) on a
+   flat panel with the Call in key rule; the page's washes and gradients go
+   (hero, the two flow headers, the closing band). The steps stay
+   collapsed: opening them by default would change behaviour, and their
+   titles now read as content. */
+html:not([data-style='classic']) .mc-how { background-image: none; }
+html:not([data-style='classic']) :is(.mch-hero, .light .mch-hero, .mch-cta, .light .mch-cta) { background: var(--hl-panel); }
+html:not([data-style='classic']) :is(.mch-flow > header, .light .mch-flow:not(.is-streamer) > header, .mch-flow.is-streamer > header) { background: transparent; }
+html:not([data-style='classic']) .mch-tree-result {
+  padding: var(--s-5) var(--s-6);
+  border: 1px solid var(--hl-line-2);
+  border-left: 3px solid var(--key-callin);
+  border-radius: var(--r);
+  background: var(--hl-panel);
+}
+html:not([data-style='classic']) body .mc-how .mch-tree-result h2 {
+  font-size: var(--t-4);
+  line-height: var(--lh-4);
+  letter-spacing: -0.01em;
+}
+/* notices (the campaign overlay note, the create form's required notice)
+   were bounty-yellow boxes, so yellow meant Bounty AND "heads up". In V2 a
+   notice is neutral: the panel, an ink rule, ink label. Danger keeps its
+   red; that is a status, not a feature. */
+html:not([data-style='classic']) .mcp-notice {
+  border-color: var(--hl-line-2);
+  border-left: 3px solid var(--c-ink);
+  border-radius: var(--r);
+  background: var(--hl-panel);
+}
+html:not([data-style='classic']) .mcp-notice .mcp-coordinate { color: var(--c-ink); }
+html:not([data-style='classic']) .mcp-notice p { font-size: var(--t-2); line-height: var(--lh-2); }
