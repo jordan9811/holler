@@ -249,3 +249,29 @@ html:not([data-style='classic']) :is(.mcb-step-chip, .mcb-refundable, .mcp-state
   letter-spacing: 0;
   text-transform: none;
 }
+
+/* ── money has one treatment (design pass, problem 5). It was olive display
+   on bounties, yellow mono on the rooms board, plain grey in the campaigns
+   table, olive again on campaign detail. In V2 every amount on a product
+   page is ink, tabular, the text face, bold; --t-4 in rows and lists. Hero
+   totals keep their size. The landing's two bands keep their feature-
+   coloured amounts (the owner's signed-off brand page: flagged, not
+   changed). ── */
+html:not([data-style='classic']) .mc-camp { --mcp-money: var(--c-ink); }
+html:not([data-style='classic']) :is(
+  .mcr-money, .mcp-money, .mc-money, .mc-money-lead,
+  .mcb-hero-total strong, .mcb-detail-total strong, .mcb-totals strong
+) {
+  color: var(--c-ink);
+  font-family: var(--font-text);
+  font-weight: var(--w-bold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  text-shadow: none;
+}
+html:not([data-style='classic']) :is(.mcr-money, .mc-money, dd.mcp-money, .mcp-tr .mcp-money, .mcp-ledger dd) {
+  font-size: var(--t-4);
+  line-height: var(--lh-4);
+}
+/* a ledger's non-money values (Places) sit in the same row at the same size */
+html:not([data-style='classic']) .mcp-ledger dd { color: var(--c-ink); font-weight: var(--w-bold); font-variant-numeric: tabular-nums; }

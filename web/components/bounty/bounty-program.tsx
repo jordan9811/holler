@@ -249,7 +249,7 @@ function Row({
             </>
           ) : (
             <>
-              <span className="text-[15px] font-[700] tabular-nums text-f-bounty-ink">
+              <span className="mc-money text-[15px] font-[700] tabular-nums text-f-bounty-ink">
                 {formatDollars(guaranteed)} {currency}
               </span>
               {contestedTotal > 0 ? (

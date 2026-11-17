@@ -253,7 +253,7 @@ export function CampaignOffer({ slug, initial }: { slug: string; initial: Public
         <h1 className="mt-4 text-[28px] font-extrabold leading-[1.1] sm:text-[36px]">{c.title}</h1>
         {c.blurb ? <p className="mt-3 max-w-2xl whitespace-pre-line text-[15px] text-hl-muted">{c.blurb}</p> : null}
         <p className="mt-4 flex flex-wrap items-baseline gap-x-2 text-[15px]">
-          <strong className="text-[24px] font-extrabold tracking-tight text-f-bounty-ink">{reward}</strong>
+          <strong className="mc-money-lead text-[24px] font-extrabold tracking-tight text-f-bounty-ink">{reward}</strong>
           <span className="text-hl-muted">{isPrize ? 'to the best' : 'for a'} {actionName} on <a href={`/${c.action.roomHandle}`} className="font-bold text-hl-strap-hi hover:underline">@{c.action.roomHandle}</a></span>
         </p>
         {isPrize ? (
@@ -276,9 +276,9 @@ export function CampaignOffer({ slug, initial }: { slug: string; initial: Public
         {/* A closed campaign advertises no space: only the date it ran to. */}
         <dl className={`mt-6 grid grid-cols-2 gap-4 border-t border-hl-line pt-5 ${live ? 'sm:grid-cols-3' : ''}`}>
           {live && isPrize ? <div><dt className="text-[12px] text-hl-dim">Entries so far</dt><dd className="text-[16px] font-bold">{c.prize?.entries ?? 0}{c.maxClaims < 100_000 ? ` of ${c.maxClaims}` : ''}</dd></div> : null}
-          {live && isPrize ? <div><dt className="text-[12px] text-hl-dim">Prize</dt><dd className="text-[16px] font-bold text-f-bounty-ink">{reward}</dd></div> : null}
+          {live && isPrize ? <div><dt className="text-[12px] text-hl-dim">Prize</dt><dd className="mc-money text-[16px] font-bold text-f-bounty-ink">{reward}</dd></div> : null}
           {live && !isPrize ? <div><dt className="text-[12px] text-hl-dim">Places</dt><dd className="text-[16px] font-bold">{c.spotsLeft} of {c.maxClaims} left</dd></div> : null}
-          {live && !isPrize ? <div><dt className="text-[12px] text-hl-dim">Budget left</dt><dd className="text-[16px] font-bold text-f-bounty-ink">{rewardLabel(c.budget.left, c.budget.symbol)}</dd></div> : null}
+          {live && !isPrize ? <div><dt className="text-[12px] text-hl-dim">Budget left</dt><dd className="mc-money text-[16px] font-bold text-f-bounty-ink">{rewardLabel(c.budget.left, c.budget.symbol)}</dd></div> : null}
           <div><dt className="text-[12px] text-hl-dim">{live ? 'Deadline' : pastDeadline ? 'Ended' : 'Was open until'}</dt><dd className="text-[16px] font-bold">{fmtDate(c.deadline) || 'None set'}</dd></div>
         </dl>
         <p className="mt-5 text-[13px] text-hl-dim">
