@@ -275,3 +275,42 @@ html:not([data-style='classic']) :is(.mcr-money, .mc-money, dd.mcp-money, .mcp-t
 }
 /* a ledger's non-money values (Places) sit in the same row at the same size */
 html:not([data-style='classic']) .mcp-ledger dd { color: var(--c-ink); font-weight: var(--w-bold); font-variant-numeric: tabular-nums; }
+
+/* ── bounties board (design pass, problem 6): the least useful element
+   dominated. Ten 8px bars and ten bordered "View bounty" buttons outweighed
+   the amounts. In V2 the amount leads (3.5), the bar is a 4px meter under
+   it, the row link is quiet text (the whole row already selects), and the
+   page loses its yellow and azure washes. The bar keeps the owner's two
+   colours (2026-10-23: locked solid green, contested yellow hatch), so
+   only weight changes here. ── */
+html:not([data-style='classic']) .mc-bounty { background-image: none; }
+html:not([data-style='classic']) :is(.mcb-hero, .light .mcb-hero) { background: var(--hl-panel); }
+html:not([data-style='classic']) .mcb-hero > div > p { color: var(--c-ink); }
+html:not([data-style='classic']) .mc-bounty .track { height: 4px; }
+html:not([data-style='classic']) .mc-bounty .track-lock { width: 14px; height: 14px; }
+html:not([data-style='classic']) .mc-bounty .track-lock svg { width: 10px; height: 10px; }
+html:not([data-style='classic']) .mc-bounty .lb-row.is-selected { background: color-mix(in oklab, var(--c-ink) 4%, var(--hl-panel)); }
+/* rank: one quiet weight; the top three were bounty-ink text (an inline
+   style, hence !important) */
+html:not([data-style='classic']) .mc-bounty .lb-rank { color: var(--hl-muted) !important; font-size: var(--t-3); font-weight: var(--w-bold); }
+html:not([data-style='classic']) .mc-bounty .lb-bar .text-f-bounty-ink:not(.mc-money) { color: var(--hl-muted); }
+html:not([data-style='classic']) .mc-bounty .lb-row .rowcta,
+html:not([data-style='classic']) .mc-bounty .lb-row .rowcta-ghost {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 0 var(--s-2);
+  border: 0;
+  background: transparent;
+  color: var(--c-ink);
+  font-size: var(--t-2);
+  font-weight: var(--w-bold);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 4px;
+}
+@media (hover: hover) and (pointer: fine) {
+  html:not([data-style='classic']) .mc-bounty .lb-row:hover .rowcta,
+  html:not([data-style='classic']) .mc-bounty .lb-row .rowcta-ghost:hover { background: transparent; box-shadow: none; text-decoration-color: currentColor; }
+}
+html:not([data-style='classic']) .mcb-create-bounty { background: color-mix(in oklab, var(--c-ink) 3%, var(--hl-panel)); }
