@@ -1,0 +1,77 @@
+/* ── Holler design tokens: the one source of truth (design pass, 2026-11-16) ──
+   Every page draws its spacing, type and colour from here and nowhere else.
+   Rules that come with it:
+     · Colour is 6 tokens. Two neutrals (bg, ink) and the four feature keys.
+       Every other shade is DERIVED from them below (ink mixed into bg), never
+       a new hex. Feature keys mean only their feature: Holler, Call in,
+       Bounty, Campaigns. They appear as a small key (a dot, a tag, a 3px rule)
+       or as the one action on that feature's own surface, never as body text,
+       a tinted background or a gradient. Primary actions elsewhere are ink.
+     · No gradients. One elevation (--e-1). Borders only where they separate
+       (--line), never as decoration.
+     · Spacing is 8 steps on a 4px base. Type is 6 sizes, 2 weights.
+     · Money is always ink, tabular, in --t-4 in rows and lists.
+     · Mono (--font-code) is for URLs, codes and timers only. */
+
+:root {
+  /* ── colour: the 6 tokens (light) ── */
+  --c-bg: #e9e3d7;       /* warm paper */
+  --c-ink: #15120e;      /* warm black: text, primary actions */
+  --c-holler: #ff2bd6;
+  --c-callin: #0a9bff;
+  --c-bounty: #ffd60a;
+  --c-rewards: #39ff6a;
+
+  /* ── derived, not tokens: every surface and line is ink mixed into bg ── */
+  --surface: color-mix(in oklab, var(--c-ink) 3%, var(--c-bg));
+  --surface-2: color-mix(in oklab, var(--c-ink) 6%, var(--c-bg));
+  --muted: color-mix(in oklab, var(--c-ink) 68%, var(--c-bg));   /* secondary text, >= 4.5:1 on bg */
+  --line: color-mix(in oklab, var(--c-ink) 14%, var(--c-bg));
+  --on-key: var(--c-ink);                                          /* text on any feature key */
+  /* a key drawn on paper needs 3:1 as a graphic: bright keys deepen toward ink */
+  --key-holler: var(--c-holler);
+  --key-callin: var(--c-callin);
+  --key-bounty: color-mix(in oklab, var(--c-bounty) 55%, var(--c-ink));
+  --key-rewards: color-mix(in oklab, var(--c-rewards) 55%, var(--c-ink));
+
+  /* ── spacing: 4px base, 8 steps ── */
+  --s-1: 4px;    /* icon to label */
+  --s-2: 8px;    /* inside controls, label to field */
+  --s-3: 12px;   /* between rows in a list */
+  --s-4: 16px;   /* dense card padding, mobile gutter */
+  --s-5: 24px;   /* card padding, between cards */
+  --s-6: 32px;   /* between groups in a section */
+  --s-7: 48px;   /* between sections on app pages */
+  --s-8: 80px;   /* between bands on marketing pages */
+
+  /* ── type: 6 sizes with set line-heights, 2 weights ── */
+  --t-1: 12px; --lh-1: 16px;   /* labels, metadata (sentence case, no tracking) */
+  --t-2: 14px; --lh-2: 20px;   /* secondary and helper text */
+  --t-3: 16px; --lh-3: 24px;   /* body, controls */
+  --t-4: 20px; --lh-4: 28px;   /* card titles, money in rows */
+  --t-5: 28px; --lh-5: 32px;   /* page titles on app pages */
+  --t-6: 44px; --lh-6: 48px;   /* marketing heroes only */
+  --w-regular: 400;
+  --w-bold: 700;
+  --font-display: var(--font-retro), 'Outfit', system-ui, sans-serif;  /* --t-4 and up */
+  --font-text: var(--font-ui), 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* ── shape and depth ── */
+  --r: 8px;          /* every card, button and field */
+  --r-pill: 999px;   /* tags and toggles only */
+  --e-1: 0 1px 2px color-mix(in oklab, var(--c-ink) 12%, transparent);  /* the one elevation */
+
+  /* ── layout ── */
+  --col: 1152px;     /* the one content column (the site header's) */
+  --tap: 44px;       /* minimum tap target */
+}
+
+/* dark: only the two neutrals change; the keys read on black as they are */
+:root.dark,
+.dark {
+  --c-bg: #0e0d0c;
+  --c-ink: #f4efe6;
+  --key-bounty: var(--c-bounty);
+  --key-rewards: var(--c-rewards);
+  --on-key: var(--c-bg);   /* the dark neutral: keys always carry dark text */
+}
