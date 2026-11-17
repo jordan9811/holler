@@ -46,7 +46,7 @@
   opacity: 0;
   transition: opacity .32s cubic-bezier(.23, 1, .32, 1);
 }
-.mcl-ways-shot[data-shot='holler'] { background-image: url('/landing/ways-holler.webp?v=4'); }
+.mcl-ways-shot[data-shot='holler'] { background-image: url('/landing/ways-holler.webp?v=5'); }
 .mcl-ways-shot[data-shot='callin'] { background-image: url('/landing/ways-callin.webp'); }
 .mcl-ways-shot[data-shot='bounty'] { background-image: url('/landing/ways-bounty.webp?v=2'); }
 .mcl-ways-stage[data-way='holler'] [data-shot='holler'],
