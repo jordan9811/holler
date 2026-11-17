@@ -166,3 +166,86 @@ html:not([data-style='classic']) .mcp-claim-row > [role='cell']::before {
   letter-spacing: 0;
   text-transform: none;
 }
+
+/* ── one pill, one job (design pass, problem 4). The mono caps pill was a
+   feature tag, a status, a page label, a tier, a count and a legend. In V2:
+     · the FEATURE TAG (Holler, Call in, Bounty, Rewards) is the only pill:
+       a hairline edge, the feature's dot, ink text, sentence case. Quiet,
+       so the feature's own action is the loud thing on its surface.
+     · a STATUS (Live, Offline, Funded, Free room, a tier) is not a pill:
+       a dot and a word, the dot carries the state, the word stays ink.
+     · the header's page label is plain text on every page. ── */
+.ft--holler, .ft:not(.ft--callin):not(.ft--bounty):not(.ft--rewards) { --ft-key: var(--key-holler); }
+.ft--callin { --ft-key: var(--key-callin); }
+.ft--bounty { --ft-key: var(--key-bounty); }
+.ft--rewards { --ft-key: var(--key-rewards); }
+html:not([data-style='classic']) :is(.ft.ft, .light .ft.ft, .light .dark .ft.ft) {
+  gap: var(--s-1);
+  padding: 2px var(--s-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--c-ink);
+  font-family: var(--font-text);
+  font-size: var(--t-1);
+  line-height: var(--lh-1);
+  font-weight: var(--w-bold);
+  letter-spacing: 0;
+  text-transform: none;
+}
+html:not([data-style='classic']) :is(.ft .ft-dot, .light .ft .ft-dot, .light .dark .ft .ft-dot) {
+  width: 8px;
+  height: 8px;
+  background: var(--ft-key);
+  box-shadow: none;
+}
+/* the page label beside the logo (Bounties wore a yellow tag; every other
+   page has plain text) */
+html:not([data-style='classic']) .mcb-product-brand :is(.ft.ft, .light .ft.ft, .light .dark .ft.ft) {
+  padding: 0;
+  border: 0;
+  color: var(--hl-muted);
+  font-weight: var(--w-regular);
+}
+html:not([data-style='classic']) .mcb-product-brand .ft .ft-dot { display: none; }
+
+/* statuses: a dot and a word */
+html:not([data-style='classic']) :is(.lv, .light .lv, .mcp-pip, .mcp-pip[data-tone], .join-free-tag, .join-rewards-tag, .mcr-tag, .mcr-recent-tag) {
+  gap: var(--s-2);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--c-ink);
+  font-family: var(--font-text);
+  font-size: var(--t-1);
+  line-height: var(--lh-1);
+  font-weight: var(--w-bold);
+  letter-spacing: 0;
+  text-transform: none;
+}
+html:not([data-style='classic']) :is(.lv .lv-dot, .light .lv .lv-dot) { background: var(--lv-hue); box-shadow: none; }
+html:not([data-style='classic']) .light :is(.lv--yellow, .lv--green) .lv-dot { background: var(--lv-hue); }
+html:not([data-style='classic']) .light .lv--yellow { --lv-hue: var(--key-bounty); }
+html:not([data-style='classic']) .light .lv--green { --lv-hue: var(--key-rewards); }
+html:not([data-style='classic']) .mc-bounty .pip,
+html:not([data-style='classic']) .mc-account .pip {
+  font-size: var(--t-1);
+  letter-spacing: 0;
+  text-transform: none;
+}
+/* counts, legends and qualifiers ("Step 1 of 2", "Refundable", "Payouts
+   queued", "if X exposes it") are plain muted text, not tags */
+html:not([data-style='classic']) :is(.mcb-step-chip, .mcb-refundable, .mcp-state-chip, .mcp-state-chip[data-tone], .mcp-rule-head strong em) {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--hl-muted);
+  font-family: var(--font-text);
+  font-size: var(--t-1);
+  line-height: var(--lh-1);
+  font-weight: var(--w-regular);
+  letter-spacing: 0;
+  text-transform: none;
+}
