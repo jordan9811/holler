@@ -491,3 +491,42 @@ html:not([data-style='classic']) body :is(.mcb-hero h1, .mch-hero h1, .rm-intro 
   font-size: var(--t-6);
   line-height: var(--lh-6);
 }
+
+/* ── tap targets (design pass, phase 4): 44px on phones and touch screens.
+   Controls that can grow do (fields, selects, buttons, the header's theme
+   and look switches, the account chip, nav rows). Small things that sit in
+   a line of text or a dense row (footer and commit links, info tips, copy
+   icons, inline "Change"/"Title" links) keep their look and get an
+   invisible 44px hit area, so nothing on the page moves. The landing is
+   left as signed off. ── */
+@media (max-width: 767px), (pointer: coarse) {
+  html:not([data-style='classic']) :is(
+    button:not(.itip-btn):not([class*='size-']):not(.mcp-inline-link):not(.mcc-switch-btn):not(.not-italic),
+    select, textarea, input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='hidden']),
+    a[class*='btn'], .mc-product-create, .mcr-create, .mcr-ghost, .mcc-section-nav a, .mcc-overview-status a
+  ):where(:not(.mc-landing *, .hm *, .mcc-layout-canvas *)) {
+    min-height: var(--tap);
+  }
+  html:not([data-style='classic']) :is(button.hl-tt, .mcc-corner button):where(:not(.mc-landing *)) { min-width: var(--tap); }
+  html:not([data-style='classic']) body .mc-product-header :is(nav, .mc-product-links) > a:not(.mc-product-create) { min-height: var(--tap); }
+  /* hit area without layout: padding the box, giving it back in margin */
+  html:not([data-style='classic']) :is(
+    footer a, .rm-commit, .rm-repo, .mcr-nav-links a, .mcr-board-head a, .mcr-feat-body h2 a, header a[aria-label='Holler home'], .mcp-link, .mcp-inline-link, .mcc-switch-btn, button.not-italic,
+    .mcc-product-brand a, .mcp-brand, .mc-product-brand, .mcc-brand, .mc-booth-brand, a.bc
+  ):where(:not(.mc-landing *)) {
+    padding-block: 14px;
+    margin-block: -14px;
+  }
+  html:not([data-style='classic']) footer a:where(:not(.mc-landing *)) { padding-inline: var(--s-2); margin-inline: calc(-1 * var(--s-2)); }
+  /* fixed-size icons: an overlay, since padding would crush the glyph */
+  html:not([data-style='classic']) :is(.itip-btn, button[class*='size-']):where(:not(.mc-landing *)) { position: relative; }
+  html:not([data-style='classic']) :is(.itip-btn, button[class*='size-']):where(:not(.mc-landing *))::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--tap);
+    height: var(--tap);
+    transform: translate(-50%, -50%);
+  }
+}
