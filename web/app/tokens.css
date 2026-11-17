@@ -314,3 +314,26 @@ html:not([data-style='classic']) .mc-bounty .lb-row .rowcta-ghost {
   html:not([data-style='classic']) .mc-bounty .lb-row .rowcta-ghost:hover { background: transparent; box-shadow: none; text-decoration-color: currentColor; }
 }
 html:not([data-style='classic']) .mcb-create-bounty { background: color-mix(in oklab, var(--c-ink) 3%, var(--hl-panel)); }
+
+/* ── the dashboard (design pass, problem 7): room status was one small grey
+   line and the settings column ended ~1,000px before the right one. In V2
+   the status is the strongest line on the page, and the settings column
+   rides along (sticky) beside the long preview column while it fits the
+   screen (not while Advanced is open, which makes it taller than one).
+   The live queue's position is unchanged: it already lifts to the top of
+   the right column when someone is waiting (data-lift). ── */
+html:not([data-style='classic']) .mcc-status-live strong {
+  color: var(--c-ink);
+  font-family: var(--font-display);
+  font-size: var(--t-4);
+  line-height: var(--lh-4);
+  font-weight: var(--w-bold);
+}
+html:not([data-style='classic']) .mcc-status-live small { font-size: var(--t-2); line-height: var(--lh-2); color: var(--hl-muted); }
+html:not([data-style='classic']) .mcc-status-live i { width: 12px; height: 12px; }
+@media (min-width: 701px) {
+  html:not([data-style='classic']) .mcc-menus { position: sticky; top: calc(64px + var(--s-4)); }
+  html:not([data-style='classic']) .mcc-menus:has(.mcc-advanced[open]) { position: static; }
+}
+/* an enabled feature keeps its 3px key rule; the tinted gradient goes */
+html:not([data-style='classic']) .mcc-feature[data-enabled=true] { background: var(--hl-panel); }
